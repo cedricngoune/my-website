@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* Le thème clair est piloté par l'attribut data-theme sur <html>.
+   Le thème sombre est celui par défaut : c'est l'identité de la maquette. */
+@custom-variant clair (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ---------------------------------------------------------------------
+   Jetons — thème sombre (par défaut)
+   ------------------------------------------------------------------ */
+
+:root {
+  --fond: #0e0a1f;
+  --fond-2: #120d28;
+  --surface: #161030;
+  --surface-2: #1c153a;
+
+  --encre: #f3f0fb;
+  --encre-douce: #9a92b8;
+  --encre-faible: #6b6389;
+
+  --bord: #241b47;
+  --bord-fort: #33285f;
+
+  --accent: #ad90f1;
+  --accent-sourd: #5b3fa8;
+  --accent-voile: rgba(173, 144, 241, 0.14);
+
+  --ombre: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -22px rgba(0, 0, 0, 0.8);
+  --ombre-haute: 0 2px 6px rgba(0, 0, 0, 0.55), 0 34px 70px -30px rgba(0, 0, 0, 0.9);
+
+  --ease-sortie: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --fond: #f6f4fc;
+  --fond-2: #efebf9;
+  --surface: #ffffff;
+  --surface-2: #f4f1fc;
+
+  --encre: #140d29;
+  --encre-douce: #554d75;
+  --encre-faible: #7d749b;
+
+  --bord: #e3ddf5;
+  --bord-fort: #cdc2ec;
+
+  --accent: #6b46c1;
+  --accent-sourd: #6b46c1;
+  --accent-voile: rgba(107, 70, 193, 0.12);
+
+  --ombre: 0 1px 2px rgba(20, 13, 41, 0.04), 0 16px 40px -22px rgba(20, 13, 41, 0.2);
+  --ombre-haute: 0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
+
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------
+   Exposition à Tailwind
+   ------------------------------------------------------------------ */
+
+@theme inline {
+  --color-fond: var(--fond);
+  --color-fond-2: var(--fond-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-encre: var(--encre);
+  --color-encre-douce: var(--encre-douce);
+  --color-encre-faible: var(--encre-faible);
+  --color-bord: var(--bord);
+  --color-bord-fort: var(--bord-fort);
+  --color-accent: var(--accent);
+  --color-accent-sourd: var(--accent-sourd);
+
+  --font-sans: var(--font-roboto), system-ui, sans-serif;
+  --font-avenir: var(--font-avenir), system-ui, sans-serif;
+  --font-roboto: var(--font-roboto), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --shadow-carte: var(--ombre);
+  --shadow-haute: var(--ombre-haute);
+
+  --ease-sortie: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  background: var(--fond);
+}
+
+body {
+  background: var(--fond);
+  color: var(--encre);
+  min-height: 100vh;
+  transition: background-color 320ms ease, color 320ms ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--fond);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   Éléments repris de la maquette
+   ------------------------------------------------------------------ */
+
+/* Les deux filets verticaux qui encadrent la page */
+.cadre {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--bord);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Petit trait vertical devant chaque entrée du rail */
+.tiret {
+  display: block;
+  width: 1px;
+  height: 1.25rem;
+  background: var(--bord-fort);
+  transition: background-color 280ms ease, height 280ms var(--ease-sortie);
+}
+
+[data-actif="true"] .tiret {
+  background: var(--accent);
+  height: 2rem;
+}
+
+/* Chevron des listes, comme dans la maquette */
+.chevron {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.chevron::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-family: var(--font-mono), monospace;
+}
+
+/* Halo derrière le portrait */
+.halo-accent {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-voile), transparent 68%);
+  filter: blur(28px);
+  pointer-events: none;
+  animation: respire 9s ease-in-out infinite alternate;
+}
+
+@keyframes respire {
+  to {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+}
+
+/* Grille technique en fond de héros */
+.trame {
+  background-image:
+    linear-gradient(to right, var(--bord) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bord) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 40% 35%, #000, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 55% at 40% 35%, #000, transparent 75%);
+}
+
+/* Curseur clignotant après le titre */
+.curseur::after {
+  content: "_";
+  color: var(--accent);
+  animation: clignote 1.15s steps(2, start) infinite;
+}
+
+@keyframes clignote {
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Apparitions
+   ------------------------------------------------------------------ */
+
+.js [data-apparition] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.js [data-apparition].vu {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 640ms var(--ease-sortie),
+    transform 640ms var(--ease-sortie);
+  transition-delay: var(--delai, 0ms);
+}
+
+.masque {
+  display: block;
+  overflow: hidden;
+}
+
+.masque > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 880ms var(--ease-sortie);
+  transition-delay: var(--delai, 0ms);
+}
+
+.js .pret .masque > span,
+html:not(.js) .masque > span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-apparition] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .masque > span {
+    transform: none !important;
+  }
+
+  .halo-accent,
+  .curseur::after {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

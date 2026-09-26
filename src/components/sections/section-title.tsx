@@ -13,7 +13,7 @@ export function SectionTitle({
         <span className="font-avenir text-4xl font-bold tracking-tight text-encre sm:text-5xl">
           {number}.
         </span>
-        <span className="font-avenir text-2xl font-light uppercase tracking-wide text-encre-douce sm:text-3xl">
+        <span className="font-avenir text-2xl font-bold uppercase tracking-wide text-encre-douce sm:text-3xl">
           {title}
         </span>
       </h2>

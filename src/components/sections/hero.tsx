@@ -14,10 +14,10 @@ export function Hero() {
           className="font-mono text-xs tracking-widest text-accent"
           data-apparition
         >
-          Bienvenue, je suis
+          Hey, je m'appelle
         </p>
 
-        <h1 className="mt-5 font-avenir text-5xl font-bold leading-[1.02] tracking-tight sm:text-7xl">
+        <h1 className="mt-5 font-avenir text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl">
           <span className="masque">
             <span style={{ ["--delai" as string]: "140ms" }}>
               {site.firstname}{" "}
@@ -33,16 +33,8 @@ export function Hero() {
           data-apparition
           style={{ ["--delai" as string]: "300ms" }}
         >
-          Développeur web{" "}
+          Développeur web
           <span className="font-mono text-accent">&lt;fullstack&gt;</span>
-        </p>
-
-        <p
-          className="mt-7 max-w-xl leading-relaxed text-encre-douce"
-          data-apparition
-          style={{ ["--delai" as string]: "400ms" }}
-        >
-          {site.chapo}
         </p>
 
         <div

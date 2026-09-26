@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 export const sections = [
   { id: "profil", label: "À propos" },
   { id: "competences", label: "Compétences" },
@@ -22,10 +24,7 @@ export const site = {
   // Déposez votre CV dans /public (ex. cv.pdf). Chaîne vide = le bouton disparaît.
   cv: "/cv.pdf",
 
-  titre: "Je construis des API solides et des interfaces claires.",
-
-  chapo:
-    "Développeur fullstack, basé en Île-de-France. \n Féru de qualité, le challenge, l'apprentissage et le partage sont mes valeurs premières.",
+  titre: "Ingénieur développeur web",
 
   figures: [
     { value: "05", legend: "années d’expérience" },
@@ -35,54 +34,54 @@ export const site = {
   ],
 
   about: [
-    "J’ai commencé comme consultant, ce qui m’a mené sur des projets très différents en peu de temps : un module de prise de paris au PMU, une plateforme de gestion de commandes montée de zéro chez Hermès, la refonte d’un back-office chez Reforest Actions. Depuis septembre 2024, je suis en CDI chez ELPEV Group sur une plateforme de gestion de publicité.",
-    "Ce passage d’un contexte à l’autre m’a appris ce qui compte : arriver sur du code qu’on n’a pas écrit, comprendre pourquoi il casse, et le remettre sur des bases tenables. C’est ce que j’ai fait en migrant une API GraphQL vers des services REST plus simples à maintenir, ou en posant un BFF pour arrêter de faire dialoguer six services entre eux à la main.",
-    "Je travaille en sprints de deux semaines, avec une mise en production et une démo à chaque fin de cycle. Je documente ce que je livre, et je réponds présent quand quelque chose casse en production.",
+    "Ingénieur développeur web et passionné de nouvelles technologies, je travaille actuellement dans une agence de campagne publicitaire destinées aux grands groupes.  j'accorde une grande importance à la qualité d'un projet tant sur l'aspect UX, fonctionnel et technique.",
+    "Mon parcours et mes expériences professionnelles m'ont permis d'acquérir de bonnes pratiques et d'avoir le discernement pour faire les bons choix.",
+    "Découvrez en plus sur mes réalisations d'entreprises et mon parcours académique.",
   ],
 
-  // Section retirée du site : conservée ici au cas où vous la remettriez.
-  services: [
-    {
-      icon: "api" as const,
-      title: "Création d’API robustes",
-      description:
-        "Une API que vos équipes utilisent sans documentation orale, et font évoluer sans tout casser six mois plus tard.",
-      details: [
-        "Conception des contrats REST et modélisation du domaine",
-        "Architecture en couches, BFF ou services dédiés selon le besoin",
-        "Authentification, droits d’accès et gestion explicite des erreurs",
-        "Tests d’intégration et documentation maintenue avec le code",
-      ],
-    },
-    {
-      icon: "interface" as const,
-      title: "Création d’interfaces modernes",
-      description:
-        "Des écrans rapides, accessibles et cohérents, construits sur un socle de composants réutilisable plutôt qu’au coup par coup.",
-      details: [
-        "Design system léger, documenté sous Storybook",
-        "États de chargement, d’erreur et d’écran vide traités, pas oubliés",
-        "Navigation clavier et contrastes vérifiés",
-        "Rendu serveur, cache et images maîtrisés",
-      ],
-    },
-    {
-      icon: "bug" as const,
-      title: "Correction de bugs et d’anomalies",
-      description:
-        "Un comportement inexpliqué en production, une régression que personne n’arrive à reproduire : je prends le sujet du diagnostic jusqu’au correctif.",
-      details: [
-        "Reproduction du problème et analyse des logs",
-        "Correctif accompagné d’un test qui empêche le retour du bug",
-        "Note écrite expliquant la cause, pas seulement la solution",
-        "Reprise de code existant, même peu ou pas documenté",
-      ],
-    },
-  ],
+  // services: [
+  //   {
+  //     icon: "api" as const,
+  //     title: "Création d’API robustes",
+  //     description:
+  //       "Une API que vos équipes utilisent sans documentation orale, et font évoluer sans tout casser six mois plus tard.",
+  //     details: [
+  //       "Conception des contrats REST et modélisation du domaine",
+  //       "Architecture en couches, BFF ou services dédiés selon le besoin",
+  //       "Authentification, droits d’accès et gestion explicite des erreurs",
+  //       "Tests d’intégration et documentation maintenue avec le code",
+  //     ],
+  //   },
+  //   {
+  //     icon: "interface" as const,
+  //     title: "Création d’interfaces modernes",
+  //     description:
+  //       "Des écrans rapides, accessibles et cohérents, construits sur un socle de composants réutilisable plutôt qu’au coup par coup.",
+  //     details: [
+  //       "Design system léger, documenté sous Storybook",
+  //       "États de chargement, d’erreur et d’écran vide traités, pas oubliés",
+  //       "Navigation clavier et contrastes vérifiés",
+  //       "Rendu serveur, cache et images maîtrisés",
+  //     ],
+  //   },
+  //   {
+  //     icon: "bug" as const,
+  //     title: "Correction de bugs et d’anomalies",
+  //     description:
+  //       "Un comportement inexpliqué en production, une régression que personne n’arrive à reproduire : je prends le sujet du diagnostic jusqu’au correctif.",
+  //     details: [
+  //       "Reproduction du problème et analyse des logs",
+  //       "Correctif accompagné d’un test qui empêche le retour du bug",
+  //       "Note écrite expliquant la cause, pas seulement la solution",
+  //       "Reprise de code existant, même peu ou pas documenté",
+  //     ],
+  //   },
+  // ],
 
   projects: [
     {
-      name: "Plateforme de gestion de publicité",
+      id: randomUUID(),
+      name: "CDI",
       client: "ELPEV Group — Nanotera",
       sigle: "EG",
       period: "Depuis sept. 2024",
@@ -105,8 +104,9 @@ export const site = {
       ],
     },
     {
-      name: "Refonte du back-office",
-      client: "Reforest’Action — consultant pour GoMind",
+      id: randomUUID(),
+      name: "Consultant",
+      client: "Reforest’Action",
       sigle: "RA",
       period: "Mai – sept. 2024",
       role: "Développeur full-stack",
@@ -128,8 +128,9 @@ export const site = {
       ],
     },
     {
-      name: "Plateforme de gestion de commandes",
-      client: "Hermès — consultant pour GoMind",
+      id: randomUUID(),
+      name: "Consultant",
+      client: "Hermès",
       sigle: "HM",
       period: "Mai 2023 – fév. 2024",
       role: "Développeur full-stack",
@@ -151,8 +152,9 @@ export const site = {
       ],
     },
     {
-      name: "Module de gestion client et de prise de paris",
-      client: "PMU — consultant pour GoMind",
+      id: randomUUID(),
+      name: "Consultant",
+      client: "PMU",
       sigle: "PM",
       period: "Avril 2022 – avril 2023",
       role: "Développeur front-end React",
@@ -207,13 +209,6 @@ export const site = {
       description: "Licence conception des systèmes d’information",
       school: "IUC, Douala",
     },
-  ],
-
-  softskills: [
-    "Résolution de problèmes",
-    "Travail d’équipe",
-    "Prise d’initiative",
-    "Partage et transmission",
   ],
 
   certifications: ["Microservices"],

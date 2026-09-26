@@ -1,7 +1,6 @@
 import { Libelle, SectionTitle } from "@/src/components/sections/section-title";
 import { site } from "@/src/content/site";
 
-/** 02. Compétences : la boîte à outils et les softskills de la maquette. */
 export function Skills() {
   const categories = Array.from(
     new Set(site.stacks.map((techno) => techno.category)),
@@ -13,10 +12,10 @@ export function Skills() {
       className="bg-fond-2 px-6 py-24 sm:px-10 xl:pl-56"
     >
       <div className="mx-auto max-w-5xl">
-        <SectionTitle number="02" title="Compétences" />
+        <SectionTitle number="02" title="Ma boite à outils" />
 
         <div className="mt-12" data-apparition>
-          <Libelle>Ma boîte à outils</Libelle>
+          <Libelle>stacks techniques</Libelle>
 
           <div className="mt-8 space-y-8">
             {categories.map((categorie, index) => (
@@ -49,17 +48,6 @@ export function Skills() {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="mt-16" data-apparition>
-          <Libelle>Softskills</Libelle>
-          <ul className="mt-6 space-y-2.5 border-l border-bord pl-6 font-mono text-sm text-encre-douce">
-            {site.softskills.map((skill) => (
-              <li key={skill} className="chevron">
-                {skill}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

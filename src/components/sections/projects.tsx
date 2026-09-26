@@ -8,13 +8,13 @@ export function Projects() {
         <SectionTitle
           number="03"
           title="Réalisations"
-          intro="Quatre missions, du module front à fort trafic à la plateforme montée de zéro."
+          intro="Projets d'entreprise menés à bien"
         />
 
         <div className="mt-12 space-y-4">
           {site.projects.map((project, index) => (
             <article
-              key={project.name}
+              key={project.id}
               className="group grid gap-6 border border-bord bg-surface p-6 transition-colors duration-300 hover:border-accent sm:grid-cols-[auto_1fr] sm:p-8"
               data-apparition
               style={{ ["--delai" as string]: `${index * 70}ms` }}
@@ -31,16 +31,14 @@ export function Projects() {
               <div>
                 <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                   <h3 className="font-avenir text-lg font-semibold tracking-tight transition-colors duration-300 group-hover:text-accent">
-                    {project.name}
+                    {project.client}
                   </h3>
                   <p className="font-mono text-xs text-encre-faible">
                     {project.period}
                   </p>
                 </div>
 
-                <p className="mt-1 text-sm text-encre-douce">
-                  {project.client}
-                </p>
+                <p className="mt-1 text-sm text-encre-douce">{project.name}</p>
 
                 <p className="mt-4 text-sm leading-relaxed text-encre-douce">
                   {project.resume}

@@ -5,7 +5,7 @@ export function About() {
   return (
     <section id="profil" className="px-6 py-24 sm:px-10 xl:pl-56">
       <div className="mx-auto max-w-5xl">
-        <SectionTitle number="01" title="À propos" />
+        <SectionTitle number="01" title="Qui suis-je ?" />
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[auto_1fr] lg:gap-14">
           <div className="relative mx-auto lg:mx-0" data-apparition>
@@ -32,7 +32,7 @@ export function About() {
             style={{ ["--delai" as string]: "120ms" }}
           >
             {site.about.map((paragraphe) => (
-              <p key={paragraphe.slice(0, 32)}>{paragraphe}</p>
+              <p key={paragraphe?.slice(0, 32)}>{paragraphe}</p>
             ))}
           </div>
         </div>
@@ -84,19 +84,6 @@ export function About() {
                 </dd>
               </div>
             </dl>
-
-            <ul className="mt-8 grid grid-cols-2 gap-4">
-              {site.figures.map((figure) => (
-                <li key={figure.legend} className="border-l border-accent pl-4">
-                  <p className="font-avenir text-2xl font-bold tracking-tight">
-                    {figure.value}
-                  </p>
-                  <p className="mt-0.5 text-xs text-encre-faible">
-                    {figure.legend}
-                  </p>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

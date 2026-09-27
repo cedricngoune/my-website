@@ -10,6 +10,7 @@ import "./globals.css";
  */
 const avenir = Montserrat({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-avenir",
   display: "swap",
 });
@@ -32,13 +33,13 @@ const description =
   "Développeur full-stack en Île-de-France : conception d’API, interfaces React et correction d’anomalies en production.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.c-ngoune.com"),
+  metadataBase: new URL("https://www.cedricngoune.com"),
   title: `${site.fullname} — ${site.job}`,
   description,
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://www.c-ngoune.com",
+    url: "https://www.cedric-ngoune.com",
     siteName: site.fullname,
     title: `${site.fullname} — ${site.job}`,
     description,

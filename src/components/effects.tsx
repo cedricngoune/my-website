@@ -16,11 +16,11 @@ export function Effects() {
     const lancer = requestAnimationFrame(() => heros?.classList.add("pret"));
 
     const observateurApparition = new IntersectionObserver(
-      (entrees, observateur) => {
-        entrees.forEach((entree) => {
-          if (!entree.isIntersecting) return;
-          entree.target.classList.add("vu");
-          observateur.unobserve(entree.target);
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("vu");
+          observer.unobserve(entry.target);
         });
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
@@ -35,34 +35,34 @@ export function Effects() {
     const blocs = Array.from(
       document.querySelectorAll<HTMLElement>("section[id]"),
     );
-    const observateurSection = new IntersectionObserver(
+    const observableSection = new IntersectionObserver(
       (entrees) => {
         entrees.forEach((entree) => {
           entree.target.classList.toggle("actif", entree.isIntersecting);
         });
         const current = blocs.find((bloc) => bloc.classList.contains("actif"));
-        links.forEach((lien) => {
-          if (current && lien.hash === `#${current.id}`)
-            lien.dataset.actif = "true";
-          else delete lien.dataset.actif;
+        links.forEach((link) => {
+          if (current && link.hash === `#${current.id}`)
+            link.dataset.actif = "true";
+          else delete link.dataset.actif;
         });
       },
       { rootMargin: "-20% 0px -62% 0px" },
     );
-    blocs.forEach((bloc) => observateurSection.observe(bloc));
+    blocs.forEach((bloc) => observableSection.observe(bloc));
 
     const header = document.querySelector<HTMLElement>("header[data-header]");
-    const auDefilement = () => {
+    const scrollAnimation = () => {
       if (header) header.dataset.defile = window.scrollY > 8 ? "true" : "false";
     };
-    auDefilement();
-    window.addEventListener("scroll", auDefilement, { passive: true });
+    scrollAnimation();
+    window.addEventListener("scroll", scrollAnimation, { passive: true });
 
     return () => {
       cancelAnimationFrame(lancer);
       observateurApparition.disconnect();
-      observateurSection.disconnect();
-      window.removeEventListener("scroll", auDefilement);
+      observableSection.disconnect();
+      window.removeEventListener("scroll", scrollAnimation);
     };
   }, []);
 

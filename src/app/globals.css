@@ -26,7 +26,8 @@
   --accent-voile: rgba(173, 144, 241, 0.14);
 
   --ombre: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -22px rgba(0, 0, 0, 0.8);
-  --ombre-haute: 0 2px 6px rgba(0, 0, 0, 0.55), 0 34px 70px -30px rgba(0, 0, 0, 0.9);
+  --ombre-haute:
+    0 2px 6px rgba(0, 0, 0, 0.55), 0 34px 70px -30px rgba(0, 0, 0, 0.9);
 
   --ease-sortie: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -50,8 +51,10 @@
   --accent-sourd: #6b46c1;
   --accent-voile: rgba(107, 70, 193, 0.12);
 
-  --ombre: 0 1px 2px rgba(20, 13, 41, 0.04), 0 16px 40px -22px rgba(20, 13, 41, 0.2);
-  --ombre-haute: 0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
+  --ombre:
+    0 1px 2px rgba(20, 13, 41, 0.04), 0 16px 40px -22px rgba(20, 13, 41, 0.2);
+  --ombre-haute:
+    0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
 
   color-scheme: light;
 }
@@ -98,7 +101,9 @@ body {
   background: var(--fond);
   color: var(--encre);
   min-height: 100vh;
-  transition: background-color 320ms ease, color 320ms ease;
+  transition:
+    background-color 320ms ease,
+    color 320ms ease;
 }
 
 ::selection {
@@ -133,7 +138,9 @@ body {
   width: 1px;
   height: 1.25rem;
   background: var(--bord-fort);
-  transition: background-color 280ms ease, height 280ms var(--ease-sortie);
+  transition:
+    background-color 280ms ease,
+    height 280ms var(--ease-sortie);
 }
 
 [data-actif="true"] .tiret {
@@ -180,8 +187,30 @@ body {
     linear-gradient(to right, var(--bord) 1px, transparent 1px),
     linear-gradient(to bottom, var(--bord) 1px, transparent 1px);
   background-size: 72px 72px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 40% 35%, #000, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 55% at 40% 35%, #000, transparent 75%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 60% 55% at 40% 35%,
+    #000,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 60% 55% at 40% 35%,
+    #000,
+    transparent 75%
+  );
+}
+
+/* Snake : même masque que la trame, pour qu'il se fonde dans le quadrillage */
+.serpent {
+  -webkit-mask-image: radial-gradient(
+    ellipse 60% 55% at 40% 35%,
+    #000,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 60% 55% at 40% 35%,
+    #000,
+    transparent 75%
+  );
 }
 
 /* Curseur clignotant après le titre */
@@ -195,6 +224,242 @@ body {
   to {
     opacity: 0;
   }
+}
+
+/* ---------------------------------------------------------------------
+   Ampoule (bascule de thème)
+   ------------------------------------------------------------------ */
+
+.ampoule .allume,
+.ampoule .eteint {
+  transition:
+    opacity 260ms ease,
+    transform 380ms var(--ease-sortie);
+}
+
+.ampoule .allume {
+  opacity: 0;
+}
+
+.ampoule .verre {
+  fill: var(--surface-2);
+  transition: fill 260ms ease;
+}
+
+.ampoule svg {
+  transition: filter 300ms ease;
+}
+
+.ampoule .rayons {
+  transform-origin: 20px 15.5px;
+  transform: scale(0.6);
+}
+
+/* Allumée : mode clair, ou survol / focus en mode sombre */
+.ampoule[data-etat="on"] .allume,
+.ampoule:focus-visible .allume {
+  opacity: 1;
+}
+
+.ampoule[data-etat="on"] .eteint,
+.ampoule:focus-visible .eteint {
+  opacity: 0;
+}
+
+.ampoule[data-etat="on"] .rayons,
+.ampoule:focus-visible .rayons {
+  transform: scale(1);
+}
+
+.ampoule[data-etat="on"] .verre,
+.ampoule:focus-visible .verre {
+  fill: #fde68a;
+}
+
+.ampoule[data-etat="on"] svg,
+.ampoule:focus-visible svg {
+  filter: drop-shadow(0 0 7px rgba(253, 230, 138, 0.55));
+}
+
+@media (hover: hover) {
+  .ampoule:hover .allume {
+    opacity: 1;
+  }
+
+  .ampoule:hover .eteint {
+    opacity: 0;
+  }
+
+  .ampoule:hover .rayons {
+    transform: scale(1);
+  }
+
+  .ampoule:hover .verre {
+    fill: #fde68a;
+  }
+
+  .ampoule:hover svg {
+    filter: drop-shadow(0 0 7px rgba(253, 230, 138, 0.55));
+  }
+
+  /* En mode clair, les rayons pulsent au survol */
+  .ampoule[data-etat="on"]:hover .rayons {
+    animation: rayonne 900ms ease-in-out infinite alternate;
+  }
+}
+
+@keyframes rayonne {
+  to {
+    transform: scale(1.14);
+  }
+}
+
+/* Les « zzz » s'envolent l'un après l'autre */
+.ampoule .z {
+  transform-box: fill-box;
+  opacity: 0;
+  animation: zzz 2.7s ease-in-out infinite;
+}
+
+.ampoule .z:nth-child(2) {
+  animation-delay: 0.45s;
+}
+
+.ampoule .z:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+@keyframes zzz {
+  0% {
+    opacity: 0;
+    transform: translate(-2px, 4px) scale(0.7);
+  }
+  30% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(3px, -5px) scale(1.05);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Bonhomme CV
+   ------------------------------------------------------------------ */
+
+.cv-buddy .perso {
+  animation: flotte 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes flotte {
+  to {
+    transform: translateY(-3px);
+  }
+}
+
+.cv-buddy .yeux {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cligne 4.5s infinite;
+}
+
+@keyframes cligne {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+.cv-buddy .bras-doc {
+  transform-origin: 47px 52px; /* épaule */
+  transition: transform 420ms var(--ease-sortie);
+}
+
+.cv-buddy .joues {
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.cv-buddy:hover .bras-doc,
+.cv-buddy:focus-visible .bras-doc {
+  transform: rotate(-9deg) translateY(-2px);
+}
+
+.cv-buddy:hover .joues,
+.cv-buddy:focus-visible .joues {
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------------
+   Boutons du héros : sans bordure, léger zoom et crochets au survol
+   ------------------------------------------------------------------ */
+
+.crochets {
+  position: relative;
+  display: inline-block;
+  transform-origin: left center;
+  transition:
+    transform 380ms var(--ease-sortie),
+    color 200ms ease;
+}
+
+.crochets::before,
+.crochets::after {
+  position: absolute;
+  top: 50%;
+  color: var(--accent);
+  font-family: var(--font-mono), monospace;
+  opacity: 0;
+  transition:
+    opacity 240ms ease,
+    transform 380ms var(--ease-sortie);
+}
+
+.crochets::before {
+  content: "[";
+  left: -1em;
+  transform: translate(0.5em, -50%);
+}
+
+.crochets::after {
+  content: "]";
+  right: -1em;
+  transform: translate(-0.5em, -50%);
+}
+
+.crochets:hover,
+.crochets:focus-visible {
+  z-index: 1;
+  transform: scale(1.15);
+  color: #fff;
+}
+[data-theme="dark"] .crochets:hover,
+[data-theme="dark"] .crochets:focus-visible {
+  color: #fff;
+}
+[data-theme="light"] .crochets:hover,
+[data-theme="light"] .crochets:focus-visible {
+  color: var(--accent);
+}
+
+.crochets:hover::before,
+.crochets:hover::after,
+.crochets:focus-visible::before,
+.crochets:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* Le contour de focus est remplacé par les crochets */
+.crochets:focus-visible {
+  outline: none;
 }
 
 /* ---------------------------------------------------------------------
@@ -247,8 +512,17 @@ html:not(.js) .masque > span {
   }
 
   .halo-accent,
-  .curseur::after {
+  .curseur::after,
+  .ampoule .rayons,
+  .cv-buddy .perso,
+  .cv-buddy .yeux {
     animation: none !important;
+  }
+
+  /* zzz figés mais visibles */
+  .ampoule .z {
+    animation: none !important;
+    opacity: 0.85;
   }
 
   *,

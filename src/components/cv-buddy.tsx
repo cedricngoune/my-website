@@ -15,7 +15,7 @@ export function CvBuddy() {
       rel="noreferrer noopener"
       aria-label="Voir mon CV (PDF, nouvel onglet)"
       title="Voir mon CV"
-      className="cv-buddy block w-[7.5rem] text-encre-douce"
+      className="cv-buddy block w-[7.5rem] text-foreground-muted"
     >
       <svg
         viewBox="0 0 120 112"
@@ -25,7 +25,7 @@ export function CvBuddy() {
         aria-hidden="true"
         className="h-auto w-full overflow-visible"
       >
-        <g className="perso">
+        <g className="character">
           {/* Jambes */}
           <g stroke="currentColor" strokeWidth="2.2">
             <path d="M31 80v20h-5" />
@@ -39,7 +39,7 @@ export function CvBuddy() {
             width="24"
             height="36"
             rx="7"
-            fill="var(--accent-voile)"
+            fill="var(--accent-soft)"
             stroke="currentColor"
             strokeWidth="2"
           />
@@ -60,12 +60,12 @@ export function CvBuddy() {
             strokeWidth="2"
           />
           {/* Yeux */}
-          <g className="yeux" fill="currentColor">
+          <g className="eyes" fill="currentColor">
             <circle cx="31.5" cy="27" r="1.6" />
             <circle cx="40.5" cy="27" r="1.6" />
           </g>
           {/* Joues (au survol) */}
-          <g className="joues" fill="#f59eb6">
+          <g className="cheeks" fill="#f59eb6">
             <circle cx="28.5" cy="32" r="2" />
             <circle cx="43.5" cy="32" r="2" />
           </g>
@@ -76,7 +76,7 @@ export function CvBuddy() {
           <path d="M25 52q-7 10-4 19" stroke="currentColor" strokeWidth="2.2" />
 
           {/* Bras droit + document, qui se lèvent ensemble au survol */}
-          <g className="bras-doc">
+          <g className="arm-doc">
             <path d="M47 52q8 4 13 2" stroke="currentColor" strokeWidth="2.2" />
 
             <g transform="rotate(6 86 48)">
@@ -115,7 +115,7 @@ export function CvBuddy() {
               </text>
 
               {/* Lignes de texte factices */}
-              <g stroke="var(--bord-fort)" strokeWidth="2">
+              <g stroke="var(--border-strong)" strokeWidth="2">
                 <path d="M68 60h36" />
                 <path d="M68 66h30" />
                 <path d="M68 72h34" />

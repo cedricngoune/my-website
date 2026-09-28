@@ -21,6 +21,7 @@ function getAudioContext(): AudioContext | null {
   return audioCtx;
 }
 
+/** Un « clac » court : un claquement aigu + un « toc » mécanique grave. */
 function playSwitchSound(turningOn: boolean) {
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -28,9 +29,10 @@ function playSwitchSound(turningOn: boolean) {
 
   const now = ctx.currentTime;
   const master = ctx.createGain();
-  master.gain.value = 0.35;
+  master.gain.value = 0.35; // volume global
   master.connect(ctx.destination);
 
+  // 1. Claquement : bruit blanc de 40 ms qui s'éteint très vite, filtré
   const duration = 0.04;
   const buffer = ctx.createBuffer(
     1,
@@ -50,6 +52,7 @@ function playSwitchSound(turningOn: boolean) {
   noise.connect(filter).connect(master);
   noise.start(now);
 
+  // 2. Toc mécanique : sinus grave dont la hauteur chute
   const osc = ctx.createOscillator();
   const oscGain = ctx.createGain();
   osc.type = "sine";
@@ -107,9 +110,7 @@ export function ThemeToggle() {
     }
   }
 
-  const label = lit
-    ? "Éteindre la lumière (mode sombre)"
-    : "Allumer la lumière (mode clair)";
+  const label = lit ? "Éteindre la lumière (mode sombre)" : "Allumer la lumière (mode clair)";
 
   return (
     <button
@@ -118,13 +119,13 @@ export function ThemeToggle() {
       aria-label={label}
       title={label}
       aria-pressed={lit}
-      data-etat={lit ? "on" : "off"}
-      className="ampoule relative cursor-pointer grid h-10 w-10 place-items-center text-encre-douce transition-transform duration-150 active:scale-90"
+      data-state={lit ? "on" : "off"}
+      className="bulb relative grid h-10 w-10 place-items-center text-foreground-muted transition-transform duration-150 active:scale-90"
     >
       <svg
         viewBox="0 0 40 40"
-        width="44"
-        height="44"
+        width="34"
+        height="34"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -132,7 +133,7 @@ export function ThemeToggle() {
         className="overflow-visible"
       >
         {/* Rayons */}
-        <g className="allume rayons" stroke="var(--accent)" strokeWidth="2">
+        <g className="lit rays" stroke="var(--accent)" strokeWidth="2">
           <path d="M20 1.5v-3" />
           <path d="M8.5 5.5 6.3 3.3" />
           <path d="M31.5 5.5l2.2-2.2" />
@@ -145,7 +146,7 @@ export function ThemeToggle() {
         {/* Verre */}
         <path
           ref={glassRef}
-          className="verre"
+          className="glass"
           stroke="currentColor"
           strokeWidth="1.8"
           d="M14.5 26C14.5 23.2 10 21 10 15.5a10 10 0 0 1 20 0C30 21 25.5 23.2 25.5 26Z"
@@ -159,7 +160,7 @@ export function ThemeToggle() {
         </g>
 
         {/* Visage endormi */}
-        <g className="eteint" stroke="currentColor" strokeWidth="1.5">
+        <g className="unlit" stroke="currentColor" strokeWidth="1.5">
           <path d="M14.8 15.2q1.5 1.5 3 0" />
           <path d="M22.2 15.2q1.5 1.5 3 0" />
           <circle cx="20" cy="20" r="1" />
@@ -167,29 +168,27 @@ export function ThemeToggle() {
 
         {/* « zzz » qui s'envolent */}
         <g
-          className="eteint zzz"
+          className="unlit zzz"
           fill="var(--accent)"
           fontFamily="var(--font-mono), monospace"
           fontWeight="700"
         >
-          <text className="z" x="28" y="8" fontSize="6">
-            z
-          </text>
-          <text className="z" x="32" y="3" fontSize="7.5">
-            z
-          </text>
-          <text className="z" x="36.5" y="-2.5" fontSize="9">
-            Z
-          </text>
+          <text className="z" x="28" y="8" fontSize="6">z</text>
+          <text className="z" x="32" y="3" fontSize="7.5">z</text>
+          <text className="z" x="36.5" y="-2.5" fontSize="9">Z</text>
         </g>
 
         {/* Visage réveillé et souriant */}
-        <g className="allume visage">
+        <g className="lit face">
           <circle cx="16.3" cy="14.6" r="1.4" fill="#2a1f45" />
           <circle cx="23.7" cy="14.6" r="1.4" fill="#2a1f45" />
           <circle cx="16.8" cy="14.1" r="0.45" fill="#fff" />
           <circle cx="24.2" cy="14.1" r="0.45" fill="#fff" />
-          <path d="M16 18.6q4 4 8 0" stroke="#2a1f45" strokeWidth="1.5" />
+          <path
+            d="M16 18.6q4 4 8 0"
+            stroke="#2a1f45"
+            strokeWidth="1.5"
+          />
           <circle cx="13.6" cy="18" r="1.3" fill="#f59eb6" opacity="0.7" />
           <circle cx="26.4" cy="18" r="1.3" fill="#f59eb6" opacity="0.7" />
         </g>

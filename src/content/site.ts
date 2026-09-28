@@ -11,9 +11,9 @@ export const site = {
   fullname: "Cédric Ngouné",
   firstname: "Cédric",
   job: "Développeur full-stack",
-  presentation: "Hey, je suis Cédric",
+  intro: "Hey, je suis Cédric",
   email: "gabyngoune@yahoo.fr",
-  telephone: "07 62 19 60 04",
+  phone: "07 62 19 60 04",
   location: "Le Vésinet (78), Île-de-France",
   availability: "",
 
@@ -24,7 +24,7 @@ export const site = {
   // Déposez votre CV dans /public (ex. cv.pdf). Chaîne vide = le bouton disparaît.
   cv: "/cv.pdf",
 
-  titre: "Ingénieur développeur web",
+  headline: "Ingénieur développeur web",
 
   figures: [
     { value: "05", legend: "années d’expérience" },
@@ -33,10 +33,27 @@ export const site = {
     { value: "02", legend: "semaines par cycle de livraison" },
   ],
 
+  /**
+   * Grande phrase de la section « Qui suis-je ? » : les mots s'allument au scroll.
+   * accent: true = mots mis en valeur en violet.
+   */
+  tagline: [
+    { text: "Ingénieur développeur web, je construis des" },
+    { text: "API solides", accent: true },
+    { text: "et des" },
+    { text: "interfaces web modernes", accent: true },
+    { text: "avec une sensibilité sur l'expérience utilisateur." },
+  ],
+
+  /** Poste actuel, affiché en fin de frise et sur le badge. */
+  currentJob: {
+    year: "2024",
+    description: "Développeur full-stack, CDI",
+    school: "ELPEV Group",
+  },
+
   about: [
-    "Ingénieur développeur web et passionné de nouvelles technologies, je travaille actuellement dans une agence de campagne publicitaire destinées aux grands groupes.  j'accorde une grande importance à la qualité d'un projet tant sur l'aspect UX, fonctionnel et technique.",
-    "Mon parcours et mes expériences professionnelles m'ont permis d'acquérir de bonnes pratiques et d'avoir le discernement pour faire les bons choix.",
-    "Découvrez en plus sur mes réalisations d'entreprises et mon parcours académique.",
+    "Ingénieur développeur web et passionné de nouvelles technologies, je travaille actuellement dans une agence de campagnes publicitaires destinées aux grands groupes. J'accorde une grande importance à la qualité d'un projet tant sur l'aspect UX, fonctionnel et technique.",
   ],
 
   // services: [
@@ -83,12 +100,12 @@ export const site = {
       id: randomUUID(),
       name: "CDI",
       client: "ELPEV Group — Nanotera",
-      sigle: "EG",
+      initials: "EG",
       period: "Depuis sept. 2024",
       role: "Développeur full-stack, CDI",
-      resume:
+      summary:
         "Développement des nouvelles fonctionnalités : administration, configuration, gestion des commandes et paiement.",
-      points: [
+      highlights: [
         "Migration d’une API GraphQL vers des services REST plus stables et plus simples à maintenir",
         "Architecture trois tiers, séparation nette entre présentation, métier et données",
         "Mise en production à chaque fin de sprint, avec démonstration",
@@ -107,12 +124,12 @@ export const site = {
       id: randomUUID(),
       name: "Consultant",
       client: "Reforest’Action",
-      sigle: "RA",
+      initials: "RA",
       period: "Mai – sept. 2024",
       role: "Développeur full-stack",
-      resume:
+      summary:
         "Reprise d’un back-office difficile à utiliser et instable, refondu vers une interface plus directe pour les équipes internes.",
-      points: [
+      highlights: [
         "Développement des fonctionnalités côté front, sur une base Vue.js",
         "Reprise de la conception du code et de sa documentation",
         "Mise en place des tests et de l’outillage de développement",
@@ -131,15 +148,15 @@ export const site = {
       id: randomUUID(),
       name: "Consultant",
       client: "Hermès",
-      sigle: "HM",
+      initials: "HM",
       period: "Mai 2023 – fév. 2024",
       role: "Développeur full-stack",
-      resume:
+      summary:
         "Construction d’une plateforme de gestion de commandes partie de zéro, dans un système d’information existant et fortement cloisonné.",
-      points: [
-        "Choix architectural d’un BFF pour rassembler les données transverses entre les services",
-        "Évolution des API en place sans rupture pour leurs consommateurs",
-        "Développement piloté par les événements, ateliers techniques et démonstrations",
+      highlights: [
+        "Création du back office'",
+        "Création des APIs + système évenementiel entre les micros services, ",
+        "Corrections de bugs, démos",
       ],
       stack: [
         "React",
@@ -155,12 +172,12 @@ export const site = {
       id: randomUUID(),
       name: "Consultant",
       client: "PMU",
-      sigle: "PM",
+      initials: "PM",
       period: "Avril 2022 – avril 2023",
       role: "Développeur front-end React",
-      resume:
+      summary:
         "Migration et refonte graphique d’un module de la plateforme, sur un produit à fort trafic où chaque régression se voit immédiatement.",
-      points: [
+      highlights: [
         "Migration du module vers React et TypeScript",
         "Correction des anomalies remontées en production",
         "Ateliers techniques et démonstrations auprès des équipes produit",
@@ -178,19 +195,19 @@ export const site = {
   ],
 
   stacks: [
-    { name: "Node.js", sigle: "JS", category: "Back-end" },
-    { name: "NestJS", sigle: "NS", category: "Back-end" },
-    { name: "Symfony", sigle: "SF", category: "Back-end" },
-    { name: "PostgreSQL", sigle: "PG", category: "Données" },
-    { name: "MongoDB", sigle: "MG", category: "Données" },
-    { name: "Prisma", sigle: "PR", category: "Données" },
-    { name: "RabbitMQ", sigle: "MQ", category: "Messagerie" },
-    { name: "React", sigle: "RC", category: "Front-end" },
-    { name: "TypeScript", sigle: "TS", category: "Front-end" },
-    { name: "React Query", sigle: "RQ", category: "Front-end" },
-    { name: "Storybook", sigle: "SB", category: "Front-end" },
-    { name: "Docker", sigle: "DK", category: "Infra" },
-    { name: "GitLab CI", sigle: "CI", category: "Infra" },
+    { name: "Node.js", initials: "JS", category: "Back-end" },
+    { name: "NestJS", initials: "NS", category: "Back-end" },
+    { name: "Symfony", initials: "SF", category: "Back-end" },
+    { name: "PostgreSQL", initials: "PG", category: "Données" },
+    { name: "MongoDB", initials: "MG", category: "Données" },
+    { name: "Prisma", initials: "PR", category: "Données" },
+    { name: "RabbitMQ", initials: "MQ", category: "Messagerie" },
+    { name: "React", initials: "RC", category: "Front-end" },
+    { name: "TypeScript", initials: "TS", category: "Front-end" },
+    { name: "React Query", initials: "RQ", category: "Front-end" },
+    { name: "Storybook", initials: "SB", category: "Front-end" },
+    { name: "Docker", initials: "DK", category: "Infra" },
+    { name: "GitLab CI", initials: "CI", category: "Infra" },
   ],
 
   schools: [
@@ -212,7 +229,7 @@ export const site = {
   ],
 
   certifications: ["Microservices"],
-  langages: ["Français, langue maternelle", "Anglais, parlé et écrit"],
+  languages: ["Français, langue maternelle", "Anglais, parlé et écrit"],
 
   links: {
     github: "https://github.com/votre-compte",

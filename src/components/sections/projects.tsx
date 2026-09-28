@@ -15,15 +15,15 @@ export function Projects() {
           {site.projects.map((project, index) => (
             <article
               key={project.id}
-              className="group grid gap-6 border border-bord bg-surface p-6 transition-colors duration-300 hover:border-accent sm:grid-cols-[auto_1fr] sm:p-8"
-              data-apparition
-              style={{ ["--delai" as string]: `${index * 70}ms` }}
+              className="group grid gap-6 border border-border bg-surface p-6 transition-colors duration-300 hover:border-accent sm:grid-cols-[auto_1fr] sm:p-8"
+              data-reveal
+              style={{ ["--delay" as string]: `${index * 70}ms` }}
             >
               <div className="flex items-start gap-4 sm:flex-col sm:items-center sm:gap-3">
-                <span className="grid h-12 w-12 shrink-0 place-items-center border border-bord-fort font-mono text-xs text-accent transition-colors duration-300 group-hover:border-accent">
-                  {project.sigle}
+                <span className="grid h-12 w-12 shrink-0 place-items-center border border-border-strong font-mono text-xs text-accent transition-colors duration-300 group-hover:border-accent">
+                  {project.initials}
                 </span>
-                <span className="font-mono text-[0.6875rem] text-encre-faible">
+                <span className="font-mono text-[0.6875rem] text-foreground-subtle">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
@@ -33,28 +33,28 @@ export function Projects() {
                   <h3 className="font-avenir text-lg font-semibold tracking-tight transition-colors duration-300 group-hover:text-accent">
                     {project.client}
                   </h3>
-                  <p className="font-mono text-xs text-encre-faible">
+                  <p className="font-mono text-xs text-foreground-subtle">
                     {project.period}
                   </p>
                 </div>
 
-                <p className="mt-1 text-sm text-encre-douce">{project.name}</p>
+                <p className="mt-1 text-sm text-foreground-muted">{project.name}</p>
 
-                <p className="mt-4 text-sm leading-relaxed text-encre-douce">
-                  {project.resume}
+                <p className="mt-4 text-sm leading-relaxed text-foreground-muted">
+                  {project.summary}
                 </p>
 
-                <ul className="mt-4 space-y-2 font-mono text-[0.8125rem] text-encre-douce">
-                  {project.points.map((point) => (
+                <ul className="mt-4 space-y-2 font-mono text-[0.8125rem] text-foreground-muted">
+                  {project.highlights.map((point) => (
                     <li key={point} className="chevron">
                       {point}
                     </li>
                   ))}
                 </ul>
 
-                <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-bord pt-5 font-mono text-[0.6875rem] text-encre-faible">
-                  {project.stack.map((techno) => (
-                    <li key={techno}>{techno}</li>
+                <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-5 font-mono text-[0.6875rem] text-foreground-subtle">
+                  {project.stack.map((tech) => (
+                    <li key={tech}>{tech}</li>
                   ))}
                 </ul>
 

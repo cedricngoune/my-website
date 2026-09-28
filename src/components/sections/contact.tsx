@@ -9,18 +9,18 @@ export function Contact() {
         <SectionTitle number="04" title="Contact" />
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-          <div data-apparition>
+          <div data-reveal>
             <p className="font-avenir text-2xl font-light leading-snug sm:text-3xl">
               Un projet, une API à reprendre, un bug qui traîne&nbsp;?
             </p>
-            <p className="mt-5 max-w-lg leading-relaxed text-encre-douce">
+            <p className="mt-5 max-w-lg leading-relaxed text-foreground-muted">
               Décrivez votre besoin en quelques lignes, avec le contexte
               technique si vous l’avez. Je réponds sous 24 heures ouvrées.
             </p>
 
             <a
               href={`mailto:${site.email}`}
-              className="mt-9 inline-flex items-center gap-2.5 border border-accent px-6 py-3 font-mono text-xs tracking-widest text-accent transition-colors duration-200 hover:bg-accent hover:text-fond"
+              className="mt-9 inline-flex items-center gap-2.5 border border-accent px-6 py-3 font-mono text-xs tracking-widest text-accent transition-colors duration-200 hover:bg-accent hover:text-background"
             >
               <Mail className="h-4 w-4" aria-hidden="true" />
               Écrire un mail
@@ -29,35 +29,35 @@ export function Contact() {
 
           <ul
             className="space-y-4 font-mono text-sm"
-            data-apparition
-            style={{ ["--delai" as string]: "120ms" }}
+            data-reveal
+            style={{ ["--delay" as string]: "120ms" }}
           >
-            <li className="border-b border-bord pb-4">
+            <li className="border-b border-border pb-4">
               <a
                 href={`mailto:${site.email}`}
-                className="flex items-center gap-3 text-encre-douce transition-colors hover:text-accent"
+                className="flex items-center gap-3 text-foreground-muted transition-colors hover:text-accent"
               >
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                 {site.email}
               </a>
             </li>
-            {site.telephone ? (
-              <li className="border-b border-bord pb-4">
+            {site.phone ? (
+              <li className="border-b border-border pb-4">
                 <a
-                  href={`tel:${site.telephone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-3 text-encre-douce transition-colors hover:text-accent"
+                  href={`tel:${site.phone.replace(/\s/g, "")}`}
+                  className="flex items-center gap-3 text-foreground-muted transition-colors hover:text-accent"
                 >
                   <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  {site.telephone}
+                  {site.phone}
                 </a>
               </li>
             ) : null}
-            <li className="border-b border-bord pb-4">
+            <li className="border-b border-border pb-4">
               <a
                 href={site.links.github}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex items-center gap-3 text-encre-douce transition-colors hover:text-accent"
+                className="flex items-center gap-3 text-foreground-muted transition-colors hover:text-accent"
               >
                 <Github className="h-4 w-4 shrink-0" aria-hidden="true" />
                 GitHub
@@ -68,7 +68,7 @@ export function Contact() {
                 href={site.links.linkedin}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex items-center gap-3 text-encre-douce transition-colors hover:text-accent"
+                className="flex items-center gap-3 text-foreground-muted transition-colors hover:text-accent"
               >
                 <Linkedin className="h-4 w-4 shrink-0" aria-hidden="true" />
                 LinkedIn

@@ -51,7 +51,7 @@ export const metadata: Metadata = {
  * Posé avant le premier rendu : pas de clignotement au chargement.
  * Le sombre est le défaut ; le clair n'apparaît que si le visiteur l'a choisi.
  */
-const amorce = `
+const bootScript = `
 (function () {
   document.documentElement.classList.add("js");
   try {
@@ -74,7 +74,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: amorce }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body className="font-sans antialiased">{children}</body>
     </html>

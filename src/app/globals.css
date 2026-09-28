@@ -2,59 +2,69 @@
 
 /* Le thème clair est piloté par l'attribut data-theme sur <html>.
    Le thème sombre est celui par défaut : c'est l'identité de la maquette. */
-@custom-variant clair (&:where([data-theme="light"], [data-theme="light"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 /* ---------------------------------------------------------------------
    Jetons — thème sombre (par défaut)
    ------------------------------------------------------------------ */
 
 :root {
-  --fond: #0e0a1f;
-  --fond-2: #120d28;
+  --background: #0e0a1f;
+  --background-2: #120d28;
   --surface: #161030;
   --surface-2: #1c153a;
 
-  --encre: #f3f0fb;
-  --encre-douce: #9a92b8;
-  --encre-faible: #6b6389;
+  --foreground: #f3f0fb;
+  --foreground-muted: #9a92b8;
+  --foreground-subtle: #6b6389;
 
-  --bord: #241b47;
-  --bord-fort: #33285f;
+  --border: #241b47;
+  --border-strong: #33285f;
 
   --accent: #ad90f1;
-  --accent-sourd: #5b3fa8;
-  --accent-voile: rgba(173, 144, 241, 0.14);
+  --accent-muted: #5b3fa8;
+  --accent-soft: rgba(173, 144, 241, 0.14);
 
-  --ombre: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -22px rgba(0, 0, 0, 0.8);
-  --ombre-haute:
+  --elevation:
+    0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 44px -22px rgba(0, 0, 0, 0.8);
+  --elevation-high:
     0 2px 6px rgba(0, 0, 0, 0.55), 0 34px 70px -30px rgba(0, 0, 0, 0.9);
 
-  --ease-sortie: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Cordon du badge */
+  --ribbon: #6a4bc4;
+  --ribbon-edge: #8f74e3;
+  --ribbon-shade: #3d2a82;
 
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --fond: #f6f4fc;
-  --fond-2: #efebf9;
+  --background: #f6f4fc;
+  --background-2: #efebf9;
   --surface: #ffffff;
   --surface-2: #f4f1fc;
 
-  --encre: #140d29;
-  --encre-douce: #554d75;
-  --encre-faible: #7d749b;
+  --foreground: #140d29;
+  --foreground-muted: #554d75;
+  --foreground-subtle: #7d749b;
 
-  --bord: #e3ddf5;
-  --bord-fort: #cdc2ec;
+  --border: #e3ddf5;
+  --border-strong: #cdc2ec;
 
   --accent: #6b46c1;
-  --accent-sourd: #6b46c1;
-  --accent-voile: rgba(107, 70, 193, 0.12);
+  --accent-muted: #6b46c1;
+  --accent-soft: rgba(107, 70, 193, 0.12);
 
-  --ombre:
+  --elevation:
     0 1px 2px rgba(20, 13, 41, 0.04), 0 16px 40px -22px rgba(20, 13, 41, 0.2);
-  --ombre-haute:
+  --elevation-high:
     0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
+
+  --ribbon: #7654d4;
+  --ribbon-edge: #9d84e8;
+  --ribbon-shade: #5233a6;
 
   color-scheme: light;
 }
@@ -64,27 +74,27 @@
    ------------------------------------------------------------------ */
 
 @theme inline {
-  --color-fond: var(--fond);
-  --color-fond-2: var(--fond-2);
+  --color-background: var(--background);
+  --color-background-2: var(--background-2);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
-  --color-encre: var(--encre);
-  --color-encre-douce: var(--encre-douce);
-  --color-encre-faible: var(--encre-faible);
-  --color-bord: var(--bord);
-  --color-bord-fort: var(--bord-fort);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
-  --color-accent-sourd: var(--accent-sourd);
+  --color-accent-muted: var(--accent-muted);
 
   --font-sans: var(--font-roboto), system-ui, sans-serif;
   --font-avenir: var(--font-avenir), system-ui, sans-serif;
   --font-roboto: var(--font-roboto), system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
 
-  --shadow-carte: var(--ombre);
-  --shadow-haute: var(--ombre-haute);
+  --shadow-card: var(--elevation);
+  --shadow-high: var(--elevation-high);
 
-  --ease-sortie: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ---------------------------------------------------------------------
@@ -94,21 +104,21 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
-  background: var(--fond);
+  background: var(--background);
+  transition: background-color 320ms ease;
 }
 
+/* Pas de fond sur body : la corde (z-index -1) peut ainsi passer derrière
+   tout le contenu tout en restant au-dessus du fond de la page. */
 body {
-  background: var(--fond);
-  color: var(--encre);
+  color: var(--foreground);
   min-height: 100vh;
-  transition:
-    background-color 320ms ease,
-    color 320ms ease;
+  transition: color 320ms ease;
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--fond);
+  color: var(--background);
 }
 
 :focus-visible {
@@ -122,28 +132,28 @@ body {
    ------------------------------------------------------------------ */
 
 /* Les deux filets verticaux qui encadrent la page */
-.cadre {
+.page-frame {
   position: fixed;
   top: 0;
   bottom: 0;
   width: 1px;
-  background: var(--bord);
+  background: var(--border);
   z-index: 5;
   pointer-events: none;
 }
 
 /* Petit trait vertical devant chaque entrée du rail */
-.tiret {
+.nav-tick {
   display: block;
   width: 1px;
   height: 1.25rem;
-  background: var(--bord-fort);
+  background: var(--border-strong);
   transition:
     background-color 280ms ease,
-    height 280ms var(--ease-sortie);
+    height 280ms var(--ease-smooth);
 }
 
-[data-actif="true"] .tiret {
+[data-active="true"] .nav-tick {
   background: var(--accent);
   height: 2rem;
 }
@@ -168,13 +178,13 @@ body {
   position: absolute;
   inset: -18%;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-voile), transparent 68%);
+  background: radial-gradient(circle, var(--accent-soft), transparent 68%);
   filter: blur(28px);
   pointer-events: none;
-  animation: respire 9s ease-in-out infinite alternate;
+  animation: breathe 9s ease-in-out infinite alternate;
 }
 
-@keyframes respire {
+@keyframes breathe {
   to {
     transform: scale(1.12);
     opacity: 0.75;
@@ -182,10 +192,10 @@ body {
 }
 
 /* Grille technique en fond de héros */
-.trame {
+.grid-pattern {
   background-image:
-    linear-gradient(to right, var(--bord) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--bord) 1px, transparent 1px);
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
   background-size: 72px 72px;
   -webkit-mask-image: radial-gradient(
     ellipse 60% 55% at 40% 35%,
@@ -200,7 +210,7 @@ body {
 }
 
 /* Snake : même masque que la trame, pour qu'il se fonde dans le quadrillage */
-.serpent {
+.snake-mask {
   -webkit-mask-image: radial-gradient(
     ellipse 60% 55% at 40% 35%,
     #000,
@@ -214,13 +224,13 @@ body {
 }
 
 /* Curseur clignotant après le titre */
-.curseur::after {
+.caret-blink::after {
   content: "_";
   color: var(--accent);
-  animation: clignote 1.15s steps(2, start) infinite;
+  animation: blink 1.15s steps(2, start) infinite;
 }
 
-@keyframes clignote {
+@keyframes blink {
   to {
     opacity: 0;
   }
@@ -230,102 +240,102 @@ body {
    Ampoule (bascule de thème)
    ------------------------------------------------------------------ */
 
-.ampoule .allume,
-.ampoule .eteint {
+.bulb .lit,
+.bulb .unlit {
   transition:
     opacity 260ms ease,
-    transform 380ms var(--ease-sortie);
+    transform 380ms var(--ease-smooth);
 }
 
-.ampoule .allume {
+.bulb .lit {
   opacity: 0;
 }
 
-.ampoule .verre {
+.bulb .glass {
   fill: var(--surface-2);
   transition: fill 260ms ease;
 }
 
-.ampoule svg {
+.bulb svg {
   transition: filter 300ms ease;
 }
 
-.ampoule .rayons {
+.bulb .rays {
   transform-origin: 20px 15.5px;
   transform: scale(0.6);
 }
 
 /* Allumée : mode clair, ou survol / focus en mode sombre */
-.ampoule[data-etat="on"] .allume,
-.ampoule:focus-visible .allume {
+.bulb[data-state="on"] .lit,
+.bulb:focus-visible .lit {
   opacity: 1;
 }
 
-.ampoule[data-etat="on"] .eteint,
-.ampoule:focus-visible .eteint {
+.bulb[data-state="on"] .unlit,
+.bulb:focus-visible .unlit {
   opacity: 0;
 }
 
-.ampoule[data-etat="on"] .rayons,
-.ampoule:focus-visible .rayons {
+.bulb[data-state="on"] .rays,
+.bulb:focus-visible .rays {
   transform: scale(1);
 }
 
-.ampoule[data-etat="on"] .verre,
-.ampoule:focus-visible .verre {
+.bulb[data-state="on"] .glass,
+.bulb:focus-visible .glass {
   fill: #fde68a;
 }
 
-.ampoule[data-etat="on"] svg,
-.ampoule:focus-visible svg {
+.bulb[data-state="on"] svg,
+.bulb:focus-visible svg {
   filter: drop-shadow(0 0 7px rgba(253, 230, 138, 0.55));
 }
 
 @media (hover: hover) {
-  .ampoule:hover .allume {
+  .bulb:hover .lit {
     opacity: 1;
   }
 
-  .ampoule:hover .eteint {
+  .bulb:hover .unlit {
     opacity: 0;
   }
 
-  .ampoule:hover .rayons {
+  .bulb:hover .rays {
     transform: scale(1);
   }
 
-  .ampoule:hover .verre {
+  .bulb:hover .glass {
     fill: #fde68a;
   }
 
-  .ampoule:hover svg {
+  .bulb:hover svg {
     filter: drop-shadow(0 0 7px rgba(253, 230, 138, 0.55));
   }
 
   /* En mode clair, les rayons pulsent au survol */
-  .ampoule[data-etat="on"]:hover .rayons {
-    animation: rayonne 900ms ease-in-out infinite alternate;
+  .bulb[data-state="on"]:hover .rays {
+    animation: radiate 900ms ease-in-out infinite alternate;
   }
 }
 
-@keyframes rayonne {
+@keyframes radiate {
   to {
     transform: scale(1.14);
   }
 }
 
 /* Les « zzz » s'envolent l'un après l'autre */
-.ampoule .z {
+.bulb .z {
   transform-box: fill-box;
   opacity: 0;
   animation: zzz 2.7s ease-in-out infinite;
 }
 
-.ampoule .z:nth-child(2) {
+.bulb .z:nth-child(2) {
   animation-delay: 0.45s;
 }
 
-.ampoule .z:nth-child(3) {
+.bulb .z:nth-child(3) {
   animation-delay: 0.9s;
 }
 
@@ -350,23 +360,23 @@ body {
    Bonhomme CV
    ------------------------------------------------------------------ */
 
-.cv-buddy .perso {
-  animation: flotte 3.4s ease-in-out infinite alternate;
+.cv-buddy .character {
+  animation: float 3.4s ease-in-out infinite alternate;
 }
 
-@keyframes flotte {
+@keyframes float {
   to {
     transform: translateY(-3px);
   }
 }
 
-.cv-buddy .yeux {
+.cv-buddy .eyes {
   transform-box: fill-box;
   transform-origin: center;
-  animation: cligne 4.5s infinite;
+  animation: wink 4.5s infinite;
 }
 
-@keyframes cligne {
+@keyframes wink {
   0%,
   92%,
   100% {
@@ -377,23 +387,23 @@ body {
   }
 }
 
-.cv-buddy .bras-doc {
+.cv-buddy .arm-doc {
   transform-origin: 47px 52px; /* épaule */
-  transition: transform 420ms var(--ease-sortie);
+  transition: transform 420ms var(--ease-smooth);
 }
 
-.cv-buddy .joues {
+.cv-buddy .cheeks {
   opacity: 0;
   transition: opacity 260ms ease;
 }
 
-.cv-buddy:hover .bras-doc,
-.cv-buddy:focus-visible .bras-doc {
+.cv-buddy:hover .arm-doc,
+.cv-buddy:focus-visible .arm-doc {
   transform: rotate(-9deg) translateY(-2px);
 }
 
-.cv-buddy:hover .joues,
-.cv-buddy:focus-visible .joues {
+.cv-buddy:hover .cheeks,
+.cv-buddy:focus-visible .cheeks {
   opacity: 0.7;
 }
 
@@ -401,17 +411,17 @@ body {
    Boutons du héros : sans bordure, léger zoom et crochets au survol
    ------------------------------------------------------------------ */
 
-.crochets {
+.brackets {
   position: relative;
   display: inline-block;
   transform-origin: left center;
   transition:
-    transform 380ms var(--ease-sortie),
+    transform 380ms var(--ease-smooth),
     color 200ms ease;
 }
 
-.crochets::before,
-.crochets::after {
+.brackets::before,
+.brackets::after {
   position: absolute;
   top: 50%;
   color: var(--accent);
@@ -419,81 +429,270 @@ body {
   opacity: 0;
   transition:
     opacity 240ms ease,
-    transform 380ms var(--ease-sortie);
+    transform 380ms var(--ease-smooth);
 }
 
-.crochets::before {
+.brackets::before {
   content: "[";
   left: -1em;
   transform: translate(0.5em, -50%);
 }
 
-.crochets::after {
+.brackets::after {
   content: "]";
   right: -1em;
   transform: translate(-0.5em, -50%);
 }
 
-.crochets:hover,
-.crochets:focus-visible {
+.brackets:hover,
+.brackets:focus-visible {
   z-index: 1;
   transform: scale(1.15);
-  color: #fff;
-}
-[data-theme="dark"] .crochets:hover,
-[data-theme="dark"] .crochets:focus-visible {
-  color: #fff;
-}
-[data-theme="light"] .crochets:hover,
-[data-theme="light"] .crochets:focus-visible {
-  color: var(--accent);
+  color: #fff; /* mode sombre : blanc */
 }
 
-.crochets:hover::before,
-.crochets:hover::after,
-.crochets:focus-visible::before,
-.crochets:focus-visible::after {
+[data-theme="light"] .brackets:hover,
+[data-theme="light"] .brackets:focus-visible {
+  color: var(--accent); /* mode clair : violet */
+}
+
+.brackets:hover::before,
+.brackets:hover::after,
+.brackets:focus-visible::before,
+.brackets:focus-visible::after {
   opacity: 1;
   transform: translate(0, -50%);
 }
 
 /* Le contour de focus est remplacé par les crochets */
-.crochets:focus-visible {
+.brackets:focus-visible {
   outline: none;
+}
+
+/* ---------------------------------------------------------------------
+   Section « Qui suis-je ? » : badge, phrase, frise (timeline)
+   ------------------------------------------------------------------ */
+
+/* Le badge pivote autour de son attache ; la rotation est pilotée par la corde (rope.tsx) */
+.badge-hanging {
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+.badge-clip {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 22px;
+  height: 14px;
+  margin: 0 auto;
+  border: 2px solid var(--foreground-subtle);
+  border-radius: 4px;
+  background: var(--background);
+}
+
+.badge-scene {
+  perspective: 900px;
+  margin-top: 6px;
+}
+
+.badge-card {
+  transform-style: preserve-3d;
+  transition: transform 700ms var(--ease-smooth);
+}
+
+.badge-card:hover {
+  transform: translateY(-3px);
+}
+
+.badge-card[data-flipped="true"] {
+  transform: rotateY(180deg);
+}
+
+.badge-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.badge-back {
+  transform: rotateY(180deg);
+}
+
+.badge-barcode {
+  height: 26px;
+  opacity: 0.45;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--foreground-muted) 0 2px,
+    transparent 2px 4px,
+    var(--foreground-muted) 4px 5px,
+    transparent 5px 8px
+  );
+}
+
+/* Frise : le trait se dessine, puis les étapes apparaissent une à une */
+.timeline {
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1100ms var(--ease-smooth) 150ms;
+  }
+
+  .timeline.is-visible::before,
+  html:not(.js) .timeline::before {
+    transform: scaleX(1);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.timeline-dot {
+  display: block;
+  width: 11px;
+  height: 11px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: var(--background);
+}
+
+.timeline-dot[data-current="true"] {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+
+.js .timeline .timeline-step {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.js .timeline.is-visible .timeline-step {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms var(--ease-smooth),
+    transform 520ms var(--ease-smooth);
+  transition-delay: calc(300ms + var(--i) * 160ms);
+}
+
+/* ---------------------------------------------------------------------
+   Cordon du badge (boucle sur le C + brins, voir rope.tsx)
+   ------------------------------------------------------------------ */
+
+.lanyard-back {
+  stroke: var(--ribbon-shade);
+}
+
+.lanyard-edge {
+  stroke: var(--ribbon-edge);
+}
+
+.lanyard-front {
+  stroke: var(--ribbon);
+}
+
+.lanyard-loop {
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+html[data-hero-typed="true"] .lanyard-loop {
+  opacity: 1;
+}
+
+.lanyard-loop-band {
+  fill: var(--ribbon);
+}
+
+.lanyard-loop-fold {
+  fill: var(--ribbon-shade);
+}
+
+.lanyard-loop-edge {
+  stroke: var(--ribbon-edge);
+  fill: none;
+}
+
+/* ---------------------------------------------------------------------
+   Saisie du sous-titre du héros
+   ------------------------------------------------------------------ */
+
+/* Copie invisible (réserve la place) et texte tapé, superposés */
+.typed-stack {
+  display: grid;
+}
+
+.typed-ghost,
+.typed-live {
+  grid-area: 1 / 1;
+}
+
+.js .typed-ghost {
+  visibility: hidden;
+}
+
+html:not(.js) .typed-live {
+  display: none;
+}
+
+.type-caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.95em;
+  margin: 0 2px;
+  vertical-align: -0.1em;
+  background: var(--accent);
+  animation: blink 0.9s steps(2, start) infinite;
 }
 
 /* ---------------------------------------------------------------------
    Apparitions
    ------------------------------------------------------------------ */
 
-.js [data-apparition] {
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
 }
 
-.js [data-apparition].vu {
+.js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
   transition:
-    opacity 640ms var(--ease-sortie),
-    transform 640ms var(--ease-sortie);
-  transition-delay: var(--delai, 0ms);
+    opacity 640ms var(--ease-smooth),
+    transform 640ms var(--ease-smooth);
+  transition-delay: var(--delay, 0ms);
 }
 
-.masque {
+.mask-reveal {
   display: block;
   overflow: hidden;
 }
 
-.masque > span {
+.mask-reveal > span {
   display: block;
   transform: translateY(105%);
-  transition: transform 880ms var(--ease-sortie);
-  transition-delay: var(--delai, 0ms);
+  transition: transform 880ms var(--ease-smooth);
+  transition-delay: var(--delay, 0ms);
 }
 
-.js .pret .masque > span,
-html:not(.js) .masque > span {
+.js .is-ready .mask-reveal > span,
+html:not(.js) .mask-reveal > span {
   transform: none;
 }
 
@@ -502,25 +701,30 @@ html:not(.js) .masque > span {
     scroll-behavior: auto;
   }
 
-  .js [data-apparition] {
+  .js [data-reveal] {
     opacity: 1;
     transform: none;
   }
 
-  .masque > span {
+  .mask-reveal > span {
     transform: none !important;
   }
 
   .halo-accent,
-  .curseur::after,
-  .ampoule .rayons,
-  .cv-buddy .perso,
-  .cv-buddy .yeux {
+  .caret-blink::after,
+  .bulb .rays,
+  .type-caret,
+  .cv-buddy .character,
+  .cv-buddy .eyes {
     animation: none !important;
   }
 
-  /* zzz figés mais visibles */
-  .ampoule .z {
+  .js .timeline .timeline-step {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bulb .z {
     animation: none !important;
     opacity: 0.85;
   }

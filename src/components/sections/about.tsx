@@ -3,18 +3,16 @@ import { SectionTitle } from "@/src/components/sections/section-title";
 import { site } from "@/src/content/site";
 
 export function About() {
-  // Parcours du plus ancien au plus récent, puis le poste actuel
   const timeline = [
     ...[...site.schools].reverse().map((school) => ({
       ...school,
       year: school.year.slice(0, 4),
       current: false,
     })),
-    { ...site.currentJob, current: true },
   ];
 
   return (
-    <section id="profil" className="px-6 py-24 sm:px-10 xl:pl-56">
+    <section id="about" className="px-6 py-24 sm:px-10 xl:pl-56">
       <div className="mx-auto max-w-5xl">
         <SectionTitle number="01" title="Qui suis-je ?" />
 

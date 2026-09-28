@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 
 export const sections = [
-  { id: "profil", label: "À propos" },
-  { id: "competences", label: "Compétences" },
+  { id: "about", label: "À propos" },
+  { id: "skills", label: "Compétences" },
   { id: "realisations", label: "Réalisations" },
   { id: "contact", label: "Contact" },
 ];
@@ -17,11 +17,9 @@ export const site = {
   location: "Le Vésinet (78), Île-de-France",
   availability: "",
 
-  // Déposez une photo dans /public et mettez son chemin ici, ex. "/photo.jpg".
   photo: "/me.jpeg",
   initial: "CN",
 
-  // Déposez votre CV dans /public (ex. cv.pdf). Chaîne vide = le bouton disparaît.
   cv: "/cv.pdf",
 
   headline: "Ingénieur développeur web",
@@ -33,10 +31,6 @@ export const site = {
     { value: "02", legend: "semaines par cycle de livraison" },
   ],
 
-  /**
-   * Grande phrase de la section « Qui suis-je ? » : les mots s'allument au scroll.
-   * accent: true = mots mis en valeur en violet.
-   */
   tagline: [
     { text: "Ingénieur développeur web, je construis des" },
     { text: "API solides", accent: true },
@@ -45,7 +39,6 @@ export const site = {
     { text: "avec une sensibilité sur l'expérience utilisateur." },
   ],
 
-  /** Poste actuel, affiché en fin de frise et sur le badge. */
   currentJob: {
     year: "2024",
     description: "Développeur full-stack, CDI",

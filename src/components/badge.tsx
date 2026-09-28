@@ -43,7 +43,7 @@ export function Badge({
                 ? "Retourner le badge côté photo"
                 : "Retourner le badge pour voir mes infos"
             }
-            onBlur={toggle}
+            onClick={toggle}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
@@ -81,7 +81,7 @@ export function Badge({
               <dl className="mt-4 space-y-3.5 text-sm">
                 <div>
                   <dt className="font-mono text-[0.6875rem] text-foreground-subtle">
-                    basé à
+                    Réside au
                   </dt>
                   <dd className="text-foreground">{location}</dd>
                 </div>
@@ -101,7 +101,7 @@ export function Badge({
                       <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                     </span>
-                    En poste · {company}
+                    En poste chez {company}
                   </dd>
                 </div>
               </dl>

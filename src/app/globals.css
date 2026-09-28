@@ -32,10 +32,15 @@
 
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Cordon du badge */
-  --ribbon: #6a4bc4;
-  --ribbon-edge: #8f74e3;
-  --ribbon-shade: #3d2a82;
+  /* Boules de « Ma boîte à outils » */
+  --skill-orb: #887cb0; /* violet du logo */
+  --skill-orb-lit: #a79bd0;
+  --skill-spark: #efe8ff;
+
+  /* Cordon du badge : même violet que le monogramme du logo (#887cb0) */
+  --ribbon: #887cb0;
+  --ribbon-edge: #9a8fc0;
+  --ribbon-shade: #675d8c;
 
   color-scheme: dark;
 }
@@ -62,9 +67,13 @@
   --elevation-high:
     0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
 
-  --ribbon: #7654d4;
-  --ribbon-edge: #9d84e8;
-  --ribbon-shade: #5233a6;
+  --ribbon: #887cb0;
+  --ribbon-edge: #9a8fc0;
+  --ribbon-shade: #675d8c;
+
+  --skill-orb: #887cb0;
+  --skill-orb-lit: #a79bd0;
+  --skill-spark: #6b46c1;
 
   color-scheme: light;
 }
@@ -630,6 +639,274 @@ html[data-hero-typed="true"] .lanyard-loop {
 }
 
 /* ---------------------------------------------------------------------
+   « Ma boîte à outils » : réseau connecté (voir skills-network.tsx)
+   ------------------------------------------------------------------ */
+
+.skills-network {
+  position: relative;
+  width: min(100%, 46rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+/* Traits entre l'ordinateur et les technos */
+.skills-links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.skills-link {
+  stroke: color-mix(in srgb, var(--skill-orb) 55%, transparent);
+  stroke-width: 0.22; /* unités du dessin (100 = largeur du réseau) : ~1,6 px sur ordinateur */
+  transition: stroke 300ms ease;
+}
+
+[data-active="true"] > .skills-link {
+  stroke: color-mix(in srgb, var(--skill-orb) 90%, transparent);
+}
+
+/* Liens de la couronne : un peu plus discrets que les rayons au repos */
+[data-ring] > .skills-link {
+  stroke: color-mix(in srgb, var(--skill-orb) 40%, transparent);
+}
+
+/* Le courant : tirets lumineux qui partent de l'ordinateur vers la boule */
+.skills-current {
+  stroke: var(--skill-spark);
+  stroke-width: 0.35;
+  stroke-linecap: round;
+  stroke-dasharray: 0.9 1.6;
+  opacity: 0;
+  filter: drop-shadow(0 0 1px var(--skill-spark));
+  transition: opacity 300ms ease;
+}
+
+[data-active="true"] > .skills-current {
+  opacity: 1;
+  animation: current-flow 0.7s linear infinite;
+}
+
+@keyframes current-flow {
+  to {
+    stroke-dashoffset: -2.5;
+  }
+}
+
+/* Ordinateur central */
+.skills-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 24%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at 50% 45%,
+    var(--surface-2),
+    var(--background-2) 72%
+  );
+  border: 1px solid var(--border-strong);
+  box-shadow:
+    0 0 40px color-mix(in srgb, var(--skill-orb) 35%, transparent),
+    inset 0 0 24px color-mix(in srgb, var(--skill-orb) 22%, transparent);
+}
+
+.skills-core::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--skill-orb) 30%, transparent);
+  animation: core-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  50% {
+    transform: scale(1.08);
+    opacity: 0.4;
+  }
+}
+
+.skills-computer {
+  width: 58%;
+  overflow: visible;
+}
+
+.computer-frame {
+  fill: var(--skill-orb);
+}
+
+.computer-screen {
+  fill: var(--background);
+}
+
+.computer-code {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.computer-caret {
+  fill: var(--accent);
+  animation: blink 1s steps(2, start) infinite;
+}
+
+/* Boules des technos */
+.skills-node {
+  position: absolute;
+  z-index: 1;
+  width: clamp(3.5rem, 14%, 6.25rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.skills-node:has([data-active="true"]) {
+  z-index: 2;
+}
+
+/* Les deux voisines de la boule survolée s'éclairent légèrement */
+.skills-node[data-neighbor="true"] .skill-orb-base {
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--skill-orb) 45%, transparent)
+  );
+}
+
+.skill-orb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.skill-orb-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition:
+    transform 400ms var(--ease-smooth),
+    filter 400ms ease;
+}
+
+.skill-orb-fill {
+  fill: var(--skill-orb);
+  transition: fill 300ms ease;
+}
+
+.skill-orb-rim {
+  fill: none;
+  stroke: rgba(14, 10, 31, 0.28);
+  stroke-width: 3;
+}
+
+.skill-orb-icon {
+  fill: var(--background);
+}
+
+.skill-orb-fx {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 350ms ease,
+    transform 400ms var(--ease-smooth);
+}
+
+.skill-orb-filament {
+  fill: none;
+  stroke: var(--skill-spark);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.skill-orb-spark {
+  fill: var(--skill-spark);
+}
+
+.skill-name {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-family: var(--font-mono), monospace;
+  font-size: 1.5rem;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 82%, transparent);
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+  pointer-events: none;
+}
+
+/* Boule active : léger agrandissement, éclaircie, filament et nom */
+.skill-orb[data-active="true"] .skill-orb-base,
+.skill-orb[data-active="true"] .skill-orb-fx {
+  transform: scale(1.14);
+}
+
+.skill-orb[data-active="true"] .skill-orb-base {
+  filter: drop-shadow(
+    0 0 8px color-mix(in srgb, var(--skill-orb) 60%, transparent)
+  );
+}
+
+.skill-orb[data-active="true"] .skill-orb-fill {
+  fill: var(--skill-orb-lit);
+}
+
+.skill-orb[data-active="true"] .skill-orb-fx {
+  opacity: 1;
+}
+
+.skill-orb[data-active="true"] .skill-name {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Apparition : les traits se dessinent depuis l'ordinateur, puis les boules arrivent */
+.js [data-reveal] .skills-link {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.js [data-reveal].is-visible .skills-link {
+  stroke-dashoffset: 0;
+  transition:
+    stroke-dashoffset 700ms var(--ease-smooth) calc(var(--i) * 50ms),
+    stroke 300ms ease;
+}
+
+.js [data-reveal] .skills-node .skill-orb {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.js [data-reveal].is-visible .skills-node .skill-orb {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 450ms var(--ease-smooth) calc(300ms + var(--i) * 50ms),
+    transform 450ms var(--ease-smooth) calc(300ms + var(--i) * 50ms);
+}
+
+/* ---------------------------------------------------------------------
    Saisie du sous-titre du héros
    ------------------------------------------------------------------ */
 
@@ -714,16 +991,25 @@ html:not(.js) .mask-reveal > span {
   .caret-blink::after,
   .bulb .rays,
   .type-caret,
+  .computer-caret,
+  .skills-core::after,
+  [data-active="true"] > .skills-current,
   .cv-buddy .character,
   .cv-buddy .eyes {
     animation: none !important;
   }
 
-  .js .timeline .timeline-step {
+  .js .timeline .timeline-step,
+  .js [data-reveal] .skills-node .skill-orb {
     opacity: 1;
     transform: none;
   }
 
+  .js [data-reveal] .skills-link {
+    stroke-dashoffset: 0;
+  }
+
+  /* zzz figés mais visibles */
   .bulb .z {
     animation: none !important;
     opacity: 0.85;

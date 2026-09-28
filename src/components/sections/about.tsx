@@ -1,5 +1,4 @@
 import { Badge } from "@/src/components/badge";
-import { SectionTitle } from "@/src/components/sections/section-title";
 import { site } from "@/src/content/site";
 
 export function About() {
@@ -12,22 +11,23 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="px-6 py-24 sm:px-10 xl:pl-56">
+    <section id="about" className="about-section px-6 py-24 sm:px-10 xl:pl-56">
       <div className="mx-auto max-w-5xl">
-        <SectionTitle number="01" title="Qui suis-je ?" />
-
-        <div className="mt-6 grid items-start gap-14 lg:mt-4 lg:grid-cols-[15rem_1fr] lg:gap-16">
-          <Badge
-            name={site.fullname}
-            photo={site.photo}
-            company={site.currentJob.school}
-            location={site.location}
-            languages={site.languages}
-          />
+        <div className="grid items-start gap-14 lg:grid-cols-[15rem_1fr] lg:gap-16">
+          <div className="lg:pt-[4.6rem]">
+            <Badge
+              name={site.fullname}
+              photo={site.photo}
+              company={site.currentJob.school}
+              location={site.location}
+              languages={site.languages}
+              certifications={site.certifications}
+            />
+          </div>
 
           <div className="lg:pt-16">
             <p
-              className="font-avenir text-3xl font-light leading-tight text-foreground sm:text-4xl lg:text-[2.6rem]"
+              className="font-avenir text-xl font-light leading-tight text-foreground sm:text-4xl lg:text-[2.6rem]"
               data-reveal
             >
               {site.tagline.map((segment) => (
@@ -39,7 +39,7 @@ export function About() {
                       : undefined
                   }
                 >
-                  {segment.text}{" "}
+                  {segment.text}
                 </span>
               ))}
             </p>
@@ -77,6 +77,7 @@ export function About() {
                   </p>
                 </li>
               ))}
+              <li className="timeline-next">à suivre</li>
             </ol>
           </div>
         </div>

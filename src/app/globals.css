@@ -37,10 +37,12 @@
   --skill-orb-lit: #a79bd0;
   --skill-spark: #efe8ff;
 
-  /* Cordon du badge : même violet que le monogramme du logo (#887cb0) */
-  --ribbon: #887cb0;
-  --ribbon-edge: #9a8fc0;
-  --ribbon-shade: #675d8c;
+  /* Fond de toute la page : le violet sombre de l'ancienne bande « compétences » */
+  --page-background: #120d28;
+
+  /* Filet électrique : le violet du thème clair */
+  --electric: #6b46c1;
+  --electric-core: #c9b6ff;
 
   color-scheme: dark;
 }
@@ -67,9 +69,10 @@
   --elevation-high:
     0 2px 6px rgba(20, 13, 41, 0.06), 0 32px 64px -28px rgba(20, 13, 41, 0.28);
 
-  --ribbon: #887cb0;
-  --ribbon-edge: #9a8fc0;
-  --ribbon-shade: #675d8c;
+  --page-background: var(--background);
+
+  --electric: #6b46c1;
+  --electric-core: #a78bfa;
 
   --skill-orb: #887cb0;
   --skill-orb-lit: #a79bd0;
@@ -113,12 +116,16 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
-  background: var(--background);
+  background: var(--page-background);
   transition: background-color 320ms ease;
+  /* Pas de barre de défilement visible (le défilement reste possible) */
+  scrollbar-width: none;
 }
 
-/* Pas de fond sur body : la corde (z-index -1) peut ainsi passer derrière
-   tout le contenu tout en restant au-dessus du fond de la page. */
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   color: var(--foreground);
   min-height: 100vh;
@@ -482,27 +489,8 @@ body {
    Section « Qui suis-je ? » : badge, phrase, frise (timeline)
    ------------------------------------------------------------------ */
 
-/* Le badge pivote autour de son attache ; la rotation est pilotée par la corde (rope.tsx) */
-.badge-hanging {
-  transform-origin: 50% 0;
-  will-change: transform;
-}
-
-.badge-clip {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 22px;
-  height: 14px;
-  margin: 0 auto;
-  border: 2px solid var(--foreground-subtle);
-  border-radius: 4px;
-  background: var(--background);
-}
-
 .badge-scene {
   perspective: 900px;
-  margin-top: 6px;
 }
 
 .badge-card {
@@ -528,6 +516,21 @@ body {
   transform: rotateY(180deg);
 }
 
+/* Indication adaptée : « survole-moi » à la souris, « touche-moi » au doigt */
+.hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .hint-hover {
+    display: none;
+  }
+
+  .hint-touch {
+    display: inline;
+  }
+}
+
 .badge-barcode {
   height: 26px;
   opacity: 0.45;
@@ -546,17 +549,19 @@ body {
 }
 
 @media (min-width: 640px) {
+  /* Trait plein qui file jusqu'au bord droit de la fenêtre
+     (la section coupe le débordement horizontal, voir .about-section) */
   .timeline::before {
     content: "";
     position: absolute;
     top: 5px;
     left: 0;
-    right: 0;
+    width: 100vw;
     height: 1px;
     background: var(--border-strong);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 1100ms var(--ease-smooth) 150ms;
+    transition: transform 1300ms var(--ease-smooth) 150ms;
   }
 
   .timeline.is-visible::before,
@@ -581,6 +586,51 @@ body {
   background: var(--background);
 }
 
+/* Section « À propos » : le trait de la frise ne crée pas de défilement horizontal */
+.about-section {
+  overflow-x: clip;
+}
+
+/* « à suivre » : sous le trait, en fin de frise */
+.timeline-next {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.timeline-next::after {
+  content: "→";
+  animation: timeline-next 1.6s ease-in-out infinite;
+}
+
+@keyframes timeline-next {
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 640px) {
+  .timeline-next {
+    position: absolute;
+    top: 1.75rem;
+    right: 0;
+  }
+}
+
+.js .timeline .timeline-next {
+  opacity: 0;
+}
+
+.js .timeline.is-visible .timeline-next {
+  opacity: 1;
+  transition: opacity 500ms ease 1100ms;
+}
+
 .timeline-dot[data-current="true"] {
   background: var(--accent);
   box-shadow: 0 0 0 5px var(--accent-soft);
@@ -598,44 +648,6 @@ body {
     opacity 520ms var(--ease-smooth),
     transform 520ms var(--ease-smooth);
   transition-delay: calc(300ms + var(--i) * 160ms);
-}
-
-/* ---------------------------------------------------------------------
-   Cordon du badge (boucle sur le C + brins, voir rope.tsx)
-   ------------------------------------------------------------------ */
-
-.lanyard-back {
-  stroke: var(--ribbon-shade);
-}
-
-.lanyard-edge {
-  stroke: var(--ribbon-edge);
-}
-
-.lanyard-front {
-  stroke: var(--ribbon);
-}
-
-.lanyard-loop {
-  opacity: 0;
-  transition: opacity 250ms ease;
-}
-
-html[data-hero-typed="true"] .lanyard-loop {
-  opacity: 1;
-}
-
-.lanyard-loop-band {
-  fill: var(--ribbon);
-}
-
-.lanyard-loop-fold {
-  fill: var(--ribbon-shade);
-}
-
-.lanyard-loop-edge {
-  stroke: var(--ribbon-edge);
-  fill: none;
 }
 
 /* ---------------------------------------------------------------------
@@ -774,11 +786,6 @@ html[data-hero-typed="true"] .lanyard-loop {
 }
 
 /* Les deux voisines de la boule survolée s'éclairent légèrement */
-.skills-node[data-neighbor="true"] .skill-orb-base {
-  filter: drop-shadow(
-    0 0 6px color-mix(in srgb, var(--skill-orb) 45%, transparent)
-  );
-}
 
 .skill-orb {
   position: relative;
@@ -791,25 +798,10 @@ html[data-hero-typed="true"] .lanyard-loop {
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: visible;
   transition:
     transform 400ms var(--ease-smooth),
-    filter 400ms ease;
-}
-
-.skill-orb-fill {
-  fill: var(--skill-orb);
-  transition: fill 300ms ease;
-}
-
-.skill-orb-rim {
-  fill: none;
-  stroke: rgba(14, 10, 31, 0.28);
-  stroke-width: 3;
-}
-
-.skill-orb-icon {
-  fill: var(--background);
+    filter 400ms ease,
+    box-shadow 400ms ease;
 }
 
 .skill-orb-fx {
@@ -859,16 +851,6 @@ html[data-hero-typed="true"] .lanyard-loop {
 .skill-orb[data-active="true"] .skill-orb-base,
 .skill-orb[data-active="true"] .skill-orb-fx {
   transform: scale(1.14);
-}
-
-.skill-orb[data-active="true"] .skill-orb-base {
-  filter: drop-shadow(
-    0 0 8px color-mix(in srgb, var(--skill-orb) 60%, transparent)
-  );
-}
-
-.skill-orb[data-active="true"] .skill-orb-fill {
-  fill: var(--skill-orb-lit);
 }
 
 .skill-orb[data-active="true"] .skill-orb-fx {
@@ -1297,16 +1279,10 @@ html:not(.js) .mask-reveal > span {
   border-top: 1px solid var(--border);
 }
 
-/* Boules des technos : même violet que la section « Ma boîte à outils » */
+/* Boules des technos : mêmes sphères en verre que « Mon terrain de jeu » */
 .project-orb {
-  position: relative;
-  display: grid;
-  place-items: center;
   width: 2.9rem;
   height: 2.9rem;
-  border-radius: 50%;
-  background: var(--skill-orb);
-  box-shadow: inset 0 -3px 6px rgba(14, 10, 31, 0.25);
   outline: none;
   animation: project-orb-in 450ms var(--ease-smooth) backwards;
   animation-delay: calc(150ms + var(--i) * 45ms);
@@ -1323,26 +1299,24 @@ html:not(.js) .mask-reveal > span {
   }
 }
 
-.project-orb svg {
-  width: 56%;
-  height: 56%;
-  fill: var(--background);
+.project-orb .glass-orb-icon {
+  width: 52%;
+  height: 52%;
 }
 
 .project-orb-text {
+  position: relative;
+  z-index: 2;
   font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--background);
+  color: var(--glass-icon);
+  text-shadow: 0 0 6px var(--glass-icon-glow);
 }
 
 .project-orb:hover,
 .project-orb:focus-visible {
   transform: scale(1.14);
-  background: var(--skill-orb-lit);
-  box-shadow:
-    0 0 0 1px var(--skill-spark),
-    0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 .project-orb-name {
@@ -1376,5 +1350,357 @@ html:not(.js) .mask-reveal > span {
   .project-orb,
   .project-slot[data-selected="true"]::before {
     animation: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Filet électrique autour de la carte de mission (Réalisations)
+   Un arc lumineux fait le tour du cadre, avec un léger grésillement.
+   ------------------------------------------------------------------ */
+
+@property --electric-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.project-card {
+  position: relative;
+}
+
+.project-card::before,
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  padding: 3px;
+  border-radius: 19px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--electric-angle),
+    transparent 0deg 250deg,
+    var(--electric) 290deg,
+    var(--electric-core) 318deg,
+    #ffffff 322deg,
+    var(--electric-core) 326deg,
+    var(--electric) 345deg,
+    transparent 360deg
+  );
+  /* On ne garde que l'anneau du cadre */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation:
+    electric-run 4.5s linear infinite,
+    electric-flicker 2.8s steps(1) infinite;
+}
+
+/* Second arc, décalé, plus diffus : donne le halo */
+.project-card::after {
+  inset: -4px;
+  padding: 6px;
+  border-radius: 22px;
+  filter: blur(6px);
+  opacity: 0.8;
+  animation:
+    electric-run 4.5s linear infinite,
+    electric-flicker 2.8s steps(1) infinite 0.4s;
+}
+
+@keyframes electric-run {
+  to {
+    --electric-angle: 360deg;
+  }
+}
+
+/* Petits décrochages de lumière, comme un courant qui grésille */
+@keyframes electric-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  14% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 0.7;
+  }
+  49% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0.4;
+  }
+  72% {
+    opacity: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card::before,
+  .project-card::after,
+  .timeline-next::after {
+    animation: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Sphères en verre violet clair (boules des technos, partout)
+   Verre plein : teinte dans la masse, bord plus lumineux (effet Fresnel),
+   gros reflet en haut à gauche, petits reflets secondaires, lumière
+   concentrée en bas (réfraction) et logo blanc lumineux au centre.
+   ------------------------------------------------------------------ */
+
+.glass-orb {
+  --glass-tint: rgba(173, 144, 241, 0.16);
+  --glass-body: rgba(173, 144, 241, 0.3);
+  --glass-edge: rgba(214, 198, 255, 0.62);
+  --glass-caustic: rgba(222, 206, 255, 0.8);
+  --glass-rim: rgba(234, 225, 255, 0.6);
+  --glass-glow: rgba(173, 144, 241, 0.38);
+  --glass-icon: #f6f2ff;
+  --glass-icon-glow: rgba(206, 188, 255, 0.95);
+  /* Fond opaque sous le verre : sphère « pleine », les traits du réseau ne passent pas au travers */
+  --glass-base: #1d1542;
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  isolation: isolate;
+  background:
+    /* lumière qui traverse la sphère et se concentre en bas */
+    radial-gradient(circle at 50% 112%, var(--glass-caustic), transparent 52%),
+    /* reflet de l'environnement dans le bas du verre */
+    radial-gradient(
+        ellipse 70% 40% at 50% 100%,
+        rgba(255, 255, 255, 0.12),
+        transparent 70%
+      ),
+    /* masse du verre : plus dense et plus claire vers les bords */
+    radial-gradient(
+        circle at 46% 42%,
+        var(--glass-tint) 0%,
+        var(--glass-body) 62%,
+        var(--glass-edge) 94%,
+        var(--glass-rim) 100%
+      ),
+    var(--glass-base);
+  box-shadow:
+    inset 0 0 0 1.5px var(--glass-rim),
+    inset 0 -10px 20px rgba(205, 185, 255, 0.3),
+    inset 6px 8px 16px rgba(255, 255, 255, 0.07),
+    inset -6px -4px 14px rgba(90, 60, 180, 0.25),
+    0 0 18px var(--glass-glow),
+    0 12px 24px -10px rgba(0, 0, 0, 0.6);
+  transition:
+    transform 350ms var(--ease-smooth),
+    box-shadow 350ms ease,
+    filter 350ms ease;
+}
+
+/* Reflets : gros reflet principal, petit point, reflet latéral, reflet bas */
+.glass-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 30% 17% at 33% 20%,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.28) 55%,
+      transparent 72%
+    ),
+    radial-gradient(
+      circle at 21% 40%,
+      rgba(255, 255, 255, 0.75) 0 2.2%,
+      transparent 3.6%
+    ),
+    radial-gradient(
+      circle at 60% 13%,
+      rgba(255, 255, 255, 0.55) 0 1.6%,
+      transparent 3%
+    ),
+    radial-gradient(
+      ellipse 9% 24% at 85% 56%,
+      rgba(255, 255, 255, 0.42),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 38% 9% at 50% 87%,
+      rgba(255, 255, 255, 0.5),
+      transparent 72%
+    );
+}
+
+/* Liseré lumineux en croissant sur le haut de la sphère */
+.glass-orb::after {
+  content: "";
+  position: absolute;
+  inset: 3%;
+  z-index: 3;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 62%,
+    transparent 63%,
+    rgba(255, 255, 255, 0.4) 69%,
+    transparent 72%
+  );
+  -webkit-mask: linear-gradient(180deg, #000 0%, transparent 45%);
+  mask: linear-gradient(180deg, #000 0%, transparent 45%);
+}
+
+.glass-orb-icon {
+  position: relative;
+  z-index: 2;
+  width: 44%;
+  height: 44%;
+  fill: var(--glass-icon);
+  filter: drop-shadow(0 0 5px var(--glass-icon-glow));
+  transition: filter 350ms ease;
+}
+
+/* Sphère allumée : survol, focus, boule active du réseau */
+.skill-orb[data-active="true"] .glass-orb,
+.project-orb:hover,
+.project-orb:focus-visible {
+  --glass-body: rgba(185, 158, 250, 0.42);
+  --glass-edge: rgba(228, 216, 255, 0.85);
+  --glass-rim: rgba(248, 244, 255, 0.95);
+  --glass-caustic: rgba(236, 226, 255, 0.95);
+  box-shadow:
+    inset 0 0 0 1.5px var(--glass-rim),
+    inset 0 -12px 24px rgba(220, 205, 255, 0.5),
+    inset 6px 8px 16px rgba(255, 255, 255, 0.1),
+    0 0 30px rgba(190, 165, 255, 0.75),
+    0 0 70px rgba(173, 144, 241, 0.3),
+    0 12px 24px -10px rgba(0, 0, 0, 0.6);
+}
+
+.skill-orb[data-active="true"] .glass-orb-icon,
+.project-orb:hover .glass-orb-icon,
+.project-orb:focus-visible .glass-orb-icon {
+  filter: drop-shadow(0 0 7px #ffffff)
+    drop-shadow(0 0 14px var(--glass-icon-glow));
+}
+
+/* Boules voisines de la boule active : légère lueur */
+.skills-node[data-neighbor="true"] .glass-orb {
+  filter: brightness(1.12);
+}
+
+/* Thème clair : verre plus teinté pour ressortir sur le fond clair */
+[data-theme="light"] .glass-orb {
+  --glass-tint: rgba(150, 115, 235, 0.35);
+  --glass-body: rgba(135, 100, 225, 0.55);
+  --glass-edge: rgba(120, 85, 210, 0.75);
+  --glass-caustic: rgba(225, 212, 255, 0.95);
+  --glass-rim: rgba(255, 255, 255, 0.7);
+  --glass-glow: rgba(107, 70, 193, 0.3);
+  --glass-icon-glow: rgba(60, 30, 150, 0.6);
+  --glass-base: #b9a3f0;
+}
+
+/* ---------------------------------------------------------------------
+   Trait lumineux sous les titres de section : même filet électrique que
+   la carte de mission (un éclat violet parcourt le trait en grésillant)
+   ------------------------------------------------------------------ */
+
+.title-line {
+  position: relative;
+  display: block;
+  /* Part du début du titre et file jusqu'au bord droit de la fenêtre
+     (le débordement horizontal est coupé par la section : overflow-x-clip) */
+  width: 100vw;
+  height: 2px;
+  margin-top: 0.9rem;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--electric) 70%, transparent),
+    color-mix(in srgb, var(--electric) 25%, transparent)
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--electric) 45%, transparent);
+  /* L'éclat ne dépasse pas les extrémités du trait, mais son halo reste visible */
+  clip-path: inset(-12px 0 -12px 0);
+}
+
+.title-line::before,
+.title-line::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 14rem;
+  height: 4px;
+  border-radius: 4px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--electric) 30%,
+    var(--electric-core) 46%,
+    #ffffff 50%,
+    var(--electric-core) 54%,
+    var(--electric) 70%,
+    transparent
+  );
+  animation:
+    title-line-run 5s linear infinite,
+    electric-flicker 2.8s steps(1) infinite;
+}
+
+/* Halo diffus qui suit l'éclat */
+.title-line::after {
+  top: -5px;
+  height: 12px;
+  filter: blur(6px);
+  opacity: 0.85;
+  animation:
+    title-line-run 5s linear infinite,
+    electric-flicker 2.8s steps(1) infinite 0.4s;
+}
+
+@keyframes title-line-run {
+  from {
+    left: -14rem;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+/* Le trait se dessine quand le titre apparaît */
+.js [data-reveal] .title-line {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.js [data-reveal].is-visible .title-line {
+  transform: scaleX(1);
+  transition: transform 900ms var(--ease-smooth) 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-line::before,
+  .title-line::after {
+    animation: none !important;
+    opacity: 0;
+  }
+
+  .js [data-reveal] .title-line {
+    transform: none;
   }
 }

@@ -21,18 +21,17 @@ export function Projects() {
     stack: project.stack.map((name) => ({
       name,
       iconPath: stackIcons[name]?.path,
-      abbreviation: stackAbbreviation(name),
+      shortname: stackAbbreviation(name),
     })),
   }));
 
   return (
-    <section id="realisations" className="px-6 py-24 sm:px-10 xl:pl-56">
+    <section
+      id="realisations"
+      className="overflow-x-clip px-6 py-24 sm:px-10 xl:pl-56"
+    >
       <div className="mx-auto max-w-5xl">
-        <SectionTitle
-          number="03"
-          title="Réalisations"
-          intro="Projets d'entreprise menés à bien"
-        />
+        <SectionTitle title="J'ai travaillé pour eux" intro="" />
 
         <div className="mt-12" data-reveal>
           <ProjectSelect projects={projects} />

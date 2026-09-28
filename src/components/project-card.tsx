@@ -5,7 +5,7 @@ import { useRef, useState, type KeyboardEvent } from "react";
 export type ProjectTech = {
   name: string;
   iconPath?: string;
-  abbreviation: string;
+  shortname: string;
 };
 
 export type ProjectCard = {
@@ -129,7 +129,7 @@ export function ProjectSelect({ projects }: { projects: ProjectCard[] }) {
 
             <p className="project-type">{selected.role}</p>
 
-            <p className="mt-5 leading-relaxed text-foreground-muted">
+            <p className="mt-5 leading-relaxed text-foreground">
               {selected.summary}
             </p>
 
@@ -149,18 +149,22 @@ export function ProjectSelect({ projects }: { projects: ProjectCard[] }) {
                 {selected.stack.map((tech, index) => (
                   <li
                     key={tech.name}
-                    className="project-orb"
+                    className="project-orb glass-orb"
                     tabIndex={0}
                     aria-label={tech.name}
                     style={{ ["--i" as string]: index }}
                   >
                     {tech.iconPath ? (
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="glass-orb-icon"
+                        aria-hidden="true"
+                      >
                         <path d={tech.iconPath} />
                       </svg>
                     ) : (
                       <span className="project-orb-text" aria-hidden="true">
-                        {tech.abbreviation}
+                        {tech.shortname}
                       </span>
                     )}
                     <span className="project-orb-name" aria-hidden="true">

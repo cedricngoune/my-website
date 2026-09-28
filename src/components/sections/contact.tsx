@@ -4,18 +4,17 @@ import { site } from "@/src/content/site";
 
 export function Contact() {
   return (
-    <section id="contact" className="px-6 py-24 sm:px-10 xl:pl-56">
+    <section
+      id="contact"
+      className="overflow-x-clip px-6 py-24 sm:px-10 xl:pl-56"
+    >
       <div className="mx-auto max-w-5xl">
-        <SectionTitle number="04" title="Contact" />
+        <SectionTitle title="À vous de jouer" />
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
           <div data-reveal>
             <p className="font-avenir text-2xl font-light leading-snug sm:text-3xl">
-              Un projet, une API à reprendre, un bug qui traîne&nbsp;?
-            </p>
-            <p className="mt-5 max-w-lg leading-relaxed text-foreground-muted">
-              Décrivez votre besoin en quelques lignes, avec le contexte
-              technique si vous l’avez. Je réponds sous 24 heures ouvrées.
+              Si ça vous parle, let's get in touch!
             </p>
 
             <a

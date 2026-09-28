@@ -46,47 +46,8 @@ export const site = {
   },
 
   about: [
-    "Ingénieur développeur web et passionné de nouvelles technologies, je travaille actuellement dans une agence de campagnes publicitaires destinées aux grands groupes. J'accorde une grande importance à la qualité d'un projet tant sur l'aspect UX, fonctionnel et technique.",
+    "Ingénieur développeur web et passionné de nouvelles technologies, j'accorde une grande importance à la qualité d'un projet tant sur l'aspect UX, que sur l'aspect fonctionnel et technique.",
   ],
-
-  // services: [
-  //   {
-  //     icon: "api" as const,
-  //     title: "Création d’API robustes",
-  //     description:
-  //       "Une API que vos équipes utilisent sans documentation orale, et font évoluer sans tout casser six mois plus tard.",
-  //     details: [
-  //       "Conception des contrats REST et modélisation du domaine",
-  //       "Architecture en couches, BFF ou services dédiés selon le besoin",
-  //       "Authentification, droits d’accès et gestion explicite des erreurs",
-  //       "Tests d’intégration et documentation maintenue avec le code",
-  //     ],
-  //   },
-  //   {
-  //     icon: "interface" as const,
-  //     title: "Création d’interfaces modernes",
-  //     description:
-  //       "Des écrans rapides, accessibles et cohérents, construits sur un socle de composants réutilisable plutôt qu’au coup par coup.",
-  //     details: [
-  //       "Design system léger, documenté sous Storybook",
-  //       "États de chargement, d’erreur et d’écran vide traités, pas oubliés",
-  //       "Navigation clavier et contrastes vérifiés",
-  //       "Rendu serveur, cache et images maîtrisés",
-  //     ],
-  //   },
-  //   {
-  //     icon: "bug" as const,
-  //     title: "Correction de bugs et d’anomalies",
-  //     description:
-  //       "Un comportement inexpliqué en production, une régression que personne n’arrive à reproduire : je prends le sujet du diagnostic jusqu’au correctif.",
-  //     details: [
-  //       "Reproduction du problème et analyse des logs",
-  //       "Correctif accompagné d’un test qui empêche le retour du bug",
-  //       "Note écrite expliquant la cause, pas seulement la solution",
-  //       "Reprise de code existant, même peu ou pas documenté",
-  //     ],
-  //   },
-  // ],
 
   projects: [
     {

@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useRef } from "react";
 
-const RADIUS = 49; // rayon de la boule, repère 100 × 100
 const FILAMENT_RADIUS = 51.5; // le filament passe juste autour
 const FILAMENT_POINTS = 72;
 
@@ -73,14 +72,12 @@ export function SkillOrb({
       onTouchStart={() => onActiveChange(true)}
       onTouchEnd={() => setTimeout(() => onActiveChange(false), 1400)}
     >
-      <svg className="skill-orb-base" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r={RADIUS} className="skill-orb-fill" />
-        <circle cx="50" cy="50" r={RADIUS - 5} className="skill-orb-rim" />
-        {/* Logo simple-icons (24 × 24) agrandi et centré */}
-        <g transform="translate(29 29) scale(1.75)">
-          <path d={iconPath} className="skill-orb-icon" />
-        </g>
-      </svg>
+      {/* Sphère en verre (styles .glass-orb) avec le logo simple-icons au centre */}
+      <span className="skill-orb-base glass-orb" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="glass-orb-icon">
+          <path d={iconPath} />
+        </svg>
+      </span>
 
       <svg
         className="skill-orb-fx"

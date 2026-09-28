@@ -1,21 +1,16 @@
 export function SectionTitle({
-  number,
   title,
   intro,
 }: {
-  number: string;
   title: string;
   intro?: string;
 }) {
   return (
     <div className="max-w-2xl" data-reveal>
-      <h2 className="flex items-baseline gap-3">
-        <span className="font-avenir text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {number}.
-        </span>
-        <span className="font-avenir text-2xl font-bold uppercase tracking-wide text-foreground-muted sm:text-3xl">
-          {title}
-        </span>
+      <h2 className="inline-block font-avenir text-3xl font-bold uppercase tracking-wide text-foreground-muted sm:text-4xl lg:text-5xl">
+        {title}
+        {/* Trait lumineux animé (voir .title-line dans globals.css) */}
+        <span className="title-line" aria-hidden="true" />
       </h2>
       {intro ? (
         <p className="mt-5 leading-relaxed text-foreground-muted">{intro}</p>

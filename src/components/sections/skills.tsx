@@ -16,10 +16,10 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="bg-background-2 px-6 py-24 sm:px-10 xl:pl-56"
+      className="overflow-x-clip px-6 py-24 sm:px-10 xl:pl-56"
     >
       <div className="mx-auto max-w-5xl">
-        <SectionTitle number="02" title="Ma boite à outils" />
+        <SectionTitle title="Mon terrain de jeu" />
 
         <div className="mt-12" data-reveal>
           <div className="mt-8">

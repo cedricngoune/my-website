@@ -49,7 +49,7 @@ export function About() {
               data-reveal
               style={{ ["--delay" as string]: "120ms" }}
             >
-              {site.about[1]}
+              {site.about[0]}
             </p>
 
             {/* Frise du parcours */}

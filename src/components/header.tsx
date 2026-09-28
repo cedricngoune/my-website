@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/src/components/theme-toggle";
+import { ThemeToggle } from "@/src/components/animations/theme-toggle";
 import { site } from "@/src/content/site";
 
 /** Barre haute : bouton CV et bascule de thème, comme dans la maquette. */

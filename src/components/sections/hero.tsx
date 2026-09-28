@@ -1,10 +1,13 @@
 import { Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { Logo } from "@/src/components/logo";
-import { Snake } from "@/src/components/snake";
-import { TypedTitle } from "@/src/components/typed-title";
+import { Snake } from "@/src/components/animations/snake";
+import { TypedTitle } from "@/src/components/animations/typed-title";
 import { site } from "@/src/content/site";
-import { LanyardLoop } from "../lanyard-loop";
-import { LANYARD_CENTER_X, LOGO_VIEWBOX_WIDTH } from "../lanyard-config";
+import { LanyardLoop } from "../lanyard/lanyard-loop";
+import {
+  LANYARD_CENTER_X,
+  LOGO_VIEWBOX_WIDTH,
+} from "../lanyard/lanyard-config";
 
 export function Hero() {
   return (

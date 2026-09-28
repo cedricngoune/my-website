@@ -1021,3 +1021,360 @@ html:not(.js) .mask-reveal > span {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------------------------------------------------------------------
+   « Réalisations » : écran de sélection façon jeu (voir project-select.tsx)
+   ------------------------------------------------------------------ */
+
+.project-select {
+  --card-frame: linear-gradient(
+    155deg,
+    var(--accent),
+    var(--skill-orb) 35%,
+    color-mix(in srgb, var(--skill-orb) 45%, var(--background)) 70%,
+    var(--accent)
+  );
+  display: grid;
+  gap: 1.75rem;
+  grid-template-areas:
+    "roster"
+    "stage";
+}
+
+@media (min-width: 1024px) {
+  .project-select {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-areas: "stage roster";
+    align-items: start;
+    gap: 2.5rem;
+  }
+}
+
+/* Liste des missions */
+.project-roster-wrap {
+  grid-area: roster;
+}
+
+.project-roster {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+/* Petit écran : une rangée de portraits (le nom est déjà sur la grande carte) */
+@media (max-width: 639px) {
+  .project-slot {
+    justify-content: center;
+  }
+
+  .project-slot-text {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .project-roster {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-roster {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    transform 300ms var(--ease-smooth),
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    background 300ms ease;
+}
+
+.project-slot:hover {
+  border-color: var(--skill-orb);
+}
+
+@media (min-width: 1024px) {
+  .project-slot:hover {
+    transform: translateX(-4px);
+  }
+}
+
+.project-slot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.project-slot[data-selected="true"] {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 20px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* Curseur ▶ qui clignote devant la mission choisie (grand écran) */
+@media (min-width: 1024px) {
+  .project-slot[data-selected="true"]::before {
+    content: "▶";
+    position: absolute;
+    left: -1.25rem;
+    font-size: 0.7rem;
+    color: var(--accent);
+    animation: project-cursor 1s steps(2) infinite;
+  }
+}
+
+@keyframes project-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+.project-slot-art {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.9rem;
+  height: 3.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-family: var(--font-avenir), system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--skill-orb);
+  background:
+    radial-gradient(
+      circle at 50% 55%,
+      color-mix(in srgb, var(--skill-orb) 30%, transparent),
+      transparent 70%
+    ),
+    var(--background-2);
+}
+
+.project-slot-client {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-avenir), system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.project-slot-period {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.65rem;
+  color: var(--foreground-subtle);
+}
+
+.project-hint {
+  display: none;
+  margin-top: 0.6rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  color: var(--foreground-subtle);
+}
+
+@media (min-width: 1024px) {
+  .project-hint {
+    display: block;
+  }
+}
+
+/* Grande carte de la mission */
+.project-stage {
+  grid-area: stage;
+  min-width: 0;
+}
+
+.project-card {
+  padding: 2px;
+  border-radius: 18px;
+  background: var(--card-frame);
+  box-shadow:
+    var(--elevation-high),
+    0 0 40px color-mix(in srgb, var(--skill-orb) 25%, transparent);
+  animation: project-enter 500ms var(--ease-smooth);
+}
+
+@keyframes project-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.97);
+  }
+}
+
+.project-card-inner {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--surface-2), var(--surface) 55%);
+}
+
+@media (min-width: 640px) {
+  .project-card-inner {
+    padding: 1.75rem;
+  }
+}
+
+/* Liseré intérieur, comme sur une carte à collectionner */
+.project-card-inner::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.project-gem {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0e0a1f;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.6),
+      transparent 40%
+    ),
+    var(--skill-orb);
+  box-shadow:
+    0 0 0 3px var(--surface-2),
+    0 0 12px color-mix(in srgb, var(--skill-orb) 60%, transparent);
+}
+
+.project-live {
+  margin-left: auto;
+  align-self: flex-start;
+  flex: none;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--background);
+  background: var(--accent);
+}
+
+.project-type {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--background) 60%, transparent);
+}
+
+.project-stack {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Boules des technos : même violet que la section « Ma boîte à outils » */
+.project-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  background: var(--skill-orb);
+  box-shadow: inset 0 -3px 6px rgba(14, 10, 31, 0.25);
+  outline: none;
+  animation: project-orb-in 450ms var(--ease-smooth) backwards;
+  animation-delay: calc(150ms + var(--i) * 45ms);
+  transition:
+    transform 300ms var(--ease-smooth),
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+@keyframes project-orb-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.project-orb svg {
+  width: 56%;
+  height: 56%;
+  fill: var(--background);
+}
+
+.project-orb-text {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--background);
+}
+
+.project-orb:hover,
+.project-orb:focus-visible {
+  transform: scale(1.14);
+  background: var(--skill-orb-lit);
+  box-shadow:
+    0 0 0 1px var(--skill-spark),
+    0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.project-orb-name {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 50%;
+  z-index: 2;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.65rem;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+  pointer-events: none;
+}
+
+.project-orb:hover .project-orb-name,
+.project-orb:focus-visible .project-orb-name {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-orb,
+  .project-slot[data-selected="true"]::before {
+    animation: none !important;
+  }
+}

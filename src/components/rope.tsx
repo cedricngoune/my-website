@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-import { HERO_TYPED_EVENT } from "@/src/components/typed-title";
-import { LOGO_VIEWBOX_WIDTH, RIBBON_WIDTH_UNITS } from "./lanyard-config";
+import { HERO_TYPED_EVENT } from "@/src/components/animations/typed-title";
+import {
+  LOGO_VIEWBOX_WIDTH,
+  RIBBON_WIDTH_UNITS,
+} from "./lanyard/lanyard-config";
 
 const SEGMENTS = 32;
 const ITERATIONS = 32; // passes de contrainte : plus = corde plus raide

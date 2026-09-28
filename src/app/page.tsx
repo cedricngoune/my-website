@@ -1,4 +1,4 @@
-import { Effects } from "@/src/components/effects";
+import { Effects } from "@/src/components/animations/effects";
 import { Footer } from "@/src/components/footer";
 import { Header } from "@/src/components/header";
 import { Rail } from "@/src/components/rail";

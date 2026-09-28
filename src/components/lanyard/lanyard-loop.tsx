@@ -1,7 +1,7 @@
 import {
   LANYARD_CENTER_X,
   RIBBON_WIDTH_UNITS,
-} from "@/src/components/lanyard-config";
+} from "@/src/components/lanyard/lanyard-config";
 
 const ARM_TOP = 144.74; // haut du bras bas du C
 const ARM_BOTTOM = 187.14; // bas du bras (= bas du logo)

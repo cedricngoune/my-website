@@ -27,11 +27,11 @@ export function Projects() {
 
   return (
     <section
-      id="realisations"
+      id="works"
       className="overflow-x-clip px-6 py-24 sm:px-10 xl:pl-56"
     >
       <div className="mx-auto max-w-5xl">
-        <SectionTitle title="J'ai travaillé pour eux" intro="" />
+        <SectionTitle title="Expériences" intro="" />
 
         <div className="mt-12" data-reveal>
           <ProjectSelect projects={projects} />

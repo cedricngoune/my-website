@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 export const sections = [
   { id: "about", label: "À propos" },
   { id: "skills", label: "Compétences" },
-  { id: "realisations", label: "Réalisations" },
+  { id: "works", label: "Expériences" },
   { id: "contact", label: "Contact" },
 ];
 

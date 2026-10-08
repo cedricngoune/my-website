@@ -115,7 +115,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  /* Les ancres placent le début de la section juste sous l'en-tête fixe */
+  scroll-padding-top: var(--header-height, 4.5rem);
   background: var(--page-background);
   transition: background-color 320ms ease;
   /* Pas de barre de défilement visible (le défilement reste possible) */

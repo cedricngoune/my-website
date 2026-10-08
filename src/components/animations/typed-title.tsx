@@ -96,7 +96,6 @@ export function TypedTitle({
           {caretInPrefix ? caret : null}
           {showBrackets ? (
             <>
-              {" "}
               <span className="font-mono text-accent">
                 &lt;{tag.slice(0, tagLength)}
                 {!caretInPrefix && caretVisible ? caret : null}&gt;

@@ -27,7 +27,7 @@ export function About() {
 
           <div className="lg:pt-16">
             <p
-              className="font-avenir text-xl font-light leading-tight text-foreground sm:text-4xl lg:text-[2.6rem]"
+              className="font-avenir text-3xl font-light leading-tight text-foreground sm:text-4xl lg:text-[2.6rem]"
               data-reveal
             >
               {site.tagline.map((segment) => (
@@ -39,7 +39,7 @@ export function About() {
                       : undefined
                   }
                 >
-                  {segment.text}
+                  {segment.text}{" "}
                 </span>
               ))}
             </p>

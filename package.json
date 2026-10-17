@@ -1,36 +1,26 @@
 {
   "name": "portfolio-cedric",
-  "version": "1.0.0",
-  "description": "Portfolio de Cédric Ngouné",
-  "main": "index.js",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "keywords": [],
+  "version": "2.0.0",
+  "private": true,
+  "description": "Portfolio de Cédric Ngouné — monorepo (v1 : site actuel, v2 : nouvelle version)",
   "author": "Cédric Ngouné",
   "license": "ISC",
-  "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.563.0",
-    "next": "^16.1.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "simple-icons": "^16.33.0",
-    "tailwind-merge": "^3.4.0"
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "yarn dev:v1 & yarn dev:v2",
+    "dev:v1": "yarn workspace @portfolio/v1 dev",
+    "dev:v2": "yarn workspace @portfolio/v2 dev",
+    "build:v1": "yarn workspace @portfolio/v1 build",
+    "build:v2": "yarn workspace @portfolio/v2 build",
+    "start:v1": "yarn workspace @portfolio/v1 start",
+    "start:v2": "yarn workspace @portfolio/v2 start",
+    "lint": "yarn workspaces run lint",
+    "typecheck": "yarn workspaces run typecheck"
   },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "^25.2.0",
-    "@types/react": "^19.2.10",
-    "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.6",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3"
+  "engines": {
+    "node": ">=22"
   }
 }

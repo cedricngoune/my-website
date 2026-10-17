@@ -1,3 +1,14 @@
+# Passage en monorepo (v1 + v2)
+
+| Élément | Ce qui change |
+| --- | --- |
+| `apps/v1/` | Le site actuel, déplacé tel quel (historique Git conservé) ; ajout du switch de version dans le pied de page |
+| `apps/v2/` | **Nouveau** : la v2 (style « Lucas ») avec écran de chargement, curseur personnalisé, thème clair/sombre soleil-lune, sous-titre animé, bandeau des entreprises, outils sur une ligne, accordéon des missions et switch de version |
+| `packages/content/` | **Nouveau** : contenu partagé (`site.ts` déplacé ici) et adresses des deux versions (`versions.ts`) |
+| `apps/v1/src/content/site.ts` | Ré-exporte le contenu partagé : les imports de la v1 ne changent pas |
+| `package.json` (racine) | Workspaces Yarn et scripts `dev:v1`, `dev:v2`, `build:v1`, `build:v2`, `typecheck` |
+| `README.md` | Structure, commandes et déploiement des deux projets sur Vercel |
+
 # Passage au style de la maquette
 
 ## Fichiers modifiés

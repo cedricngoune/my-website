@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+/* Thème sombre piloté par data-theme sur <html> (le clair est celui par défaut) */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------------
+   Jetons — thème clair (par défaut)
+   ------------------------------------------------------------------ */
+
+:root {
+  --background: #f6f3ef;
+  --surface: #ffffff;
+  --foreground: #111111;
+  --foreground-muted: #6b6b6b;
+  --foreground-soft: #9a948c;
+  --foreground-body: #4a4a4a;
+  --border: #e2ddd6;
+  --frame: #a8a29a;
+
+  --button: #111111;
+  --button-foreground: #ffffff;
+
+  --accordion-open: #2e2e2e;
+  --accordion-open-foreground: #ffffff;
+  --accordion-closed-foreground: #5a5a5a;
+  --bullet: #6b7280;
+
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --card-muted: #bdb7af;
+  --chip-border: #4a4a4a;
+
+  --cursor: #5a5a5a;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #101010;
+  --surface: #1b1b1b;
+  --foreground: #f2efea;
+  --foreground-muted: #a3a09b;
+  --foreground-soft: #7c7873;
+  --foreground-body: #c9c5bf;
+  --border: #2a2a2a;
+  --frame: #4a4744;
+
+  --button: #f2efea;
+  --button-foreground: #111111;
+
+  --accordion-open: #f2efea;
+  --accordion-open-foreground: #111111;
+  --accordion-closed-foreground: #a3a09b;
+  --bullet: #a3a09b;
+
+  --card: #1b1b1b;
+  --card-foreground: #f2efea;
+  --card-muted: #a3a09b;
+  --chip-border: #3a3a3a;
+
+  --cursor: #bdb7af;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-soft: var(--foreground-soft);
+  --color-foreground-body: var(--foreground-body);
+  --color-border: var(--border);
+  --color-frame: var(--frame);
+  --color-button: var(--button);
+  --color-button-foreground: var(--button-foreground);
+  --color-accordion-open: var(--accordion-open);
+  --color-accordion-open-foreground: var(--accordion-open-foreground);
+  --color-accordion-closed-foreground: var(--accordion-closed-foreground);
+  --color-bullet: var(--bullet);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-muted: var(--card-muted);
+  --color-chip-border: var(--chip-border);
+
+  --font-sans: var(--font-urbanist), system-ui, sans-serif;
+
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ---------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
+  background: var(--background);
+  color: var(--foreground);
+  transition:
+    background-color 450ms ease,
+    color 450ms ease;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   Écran de chargement (splash.tsx)
+   ------------------------------------------------------------------ */
+
+.splash {
+  transition: transform 700ms var(--ease-curtain);
+}
+
+.splash[data-phase="leaving"] {
+  transform: translateY(-100%);
+}
+
+.splash-letter {
+  animation: splash-letter 1.2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 100ms);
+}
+
+.splash-bar {
+  transform-origin: left;
+  animation: splash-bar 1.6s ease-out forwards;
+}
+
+@keyframes splash-letter {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes splash-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Curseur personnalisé (custom-cursor.tsx) — seulement avec une souris
+   ------------------------------------------------------------------ */
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor-ring {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border: 1.5px solid var(--cursor);
+  transition:
+    opacity 200ms ease,
+    width 250ms ease,
+    height 250ms ease,
+    margin 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.cursor-dot {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: var(--cursor);
+}
+
+[data-cursor-visible="true"] .cursor-ring,
+[data-cursor-visible="true"] .cursor-dot {
+  opacity: 1;
+}
+
+/* Sur un élément cliquable : le cercle grossit et devient plein.
+   Le mode « différence » inverse ce qu'il couvre, le texte reste lisible. */
+[data-cursor-hover="true"] .cursor-ring {
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border-color: transparent;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+[data-cursor-hover="true"] .cursor-dot {
+  opacity: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Bouton soleil / lune (theme-toggle.tsx)
+   ------------------------------------------------------------------ */
+
+.sun-rays,
+.sun-core {
+  transform-origin: 12px 12px;
+  transition:
+    transform 500ms var(--ease-curtain),
+    opacity 300ms ease;
+}
+
+.moon-shadow {
+  transition: transform 500ms var(--ease-curtain);
+}
+
+[data-theme="dark"] .sun-rays {
+  transform: rotate(90deg) scale(0);
+  opacity: 0;
+}
+
+[data-theme="dark"] .sun-core {
+  transform: scale(1.25);
+}
+
+[data-theme="dark"] .moon-shadow {
+  transform: translate(-8px, 6px);
+}
+
+/* ---------------------------------------------------------------------
+   Animations diverses
+   ------------------------------------------------------------------ */
+
+.badge-spin {
+  animation: badge-spin 14s linear infinite;
+}
+
+@keyframes badge-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.typing-caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Logo Symfony (noir) : passe en clair en thème sombre */
+[data-theme="dark"] .icon-on-dark-invert {
+  filter: invert(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .badge-spin,
+  .marquee-track,
+  .typing-caret,
+  .splash-letter {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

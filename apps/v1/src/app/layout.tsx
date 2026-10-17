@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://www.cedric-ngoune.com",
+    url: "https://www.cedricngoune.com",
     siteName: site.fullname,
     title: `${site.fullname} — ${site.job}`,
     description,
